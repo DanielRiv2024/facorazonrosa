@@ -13,6 +13,8 @@ export default function ProductsPage() {
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  console.log(API_KEY)
+  console.log(API_URL)
   useEffect(() => {
     const fetchProducts = async () => {
       try {
