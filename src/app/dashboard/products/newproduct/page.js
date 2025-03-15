@@ -46,7 +46,7 @@ export default function NewProduct() {
       }
 
       alert("✅ Producto agregado con éxito!");
-      router.push("/products");
+      router.push("/dashboard/products");
 
     } catch (error) {
       console.error("Error:", error);

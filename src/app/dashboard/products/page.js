@@ -13,8 +13,7 @@ export default function ProductsPage() {
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-  console.log(API_KEY)
-  console.log(API_URL)
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -35,6 +34,27 @@ export default function ProductsPage() {
 
     fetchProducts();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("¿Seguro que quieres eliminar este producto?")) return;
+
+    try {
+      const response = await fetch(`${API_URL}/${id}?code=${API_KEY}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Error al eliminar el producto");
+      }
+
+      alert("✅ Producto eliminado con éxito!");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error:", error);
+      alert("❌ Hubo un problema al eliminar el producto");
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <div
@@ -67,7 +87,6 @@ export default function ProductsPage() {
               <div
                 key={product.id}
                 className="border border-gray-700 p-4 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer flex flex-col items-center justify-center"
-                onClick={() => router.push(`/products/${product.id}`)}
               >
                 <img
                   src={product.image}
@@ -87,6 +106,12 @@ export default function ProductsPage() {
                     {product.status ? "Disponible" : "Agotado"}
                   </span>
                 </div>
+                <button
+                  onClick={() => handleDelete(product.id)}
+                  className="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
+                >
+                  Eliminar
+                </button>
               </div>
             ))}
           </div>
