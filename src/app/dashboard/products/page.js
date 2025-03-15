@@ -6,7 +6,7 @@ import Navbar from "@/app/navigation/navbar";
 import ProductsTopBar from "./productsTopBar";
 
 export default function ProductsPage() {
-  const [showNavbar, setShowNavbar] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(false);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
