@@ -6,23 +6,23 @@ export default function BillingTable({ sales }) {
       <table className="min-w-full border border-gray-300">
         <thead>
           <tr className="bg-neutral-900">
-            <th className="border px-4 py-2 text-left">Fecha y Hora</th>
-            <th className="border px-4 py-2 text-left">Sucursal</th>
-            <th className="border px-4 py-2 text-left">Total</th>
-            <th className="border px-4 py-2 text-left">Descripción</th>
-            <th className="border px-4 py-2 text-left">Tipo</th>
+            <th className="border px-4 py-2 text-left text-white">Fecha y Hora</th>
+            <th className="border px-4 py-2 text-left text-white">Sucursal</th>
+            <th className="border px-4 py-2 text-left text-white">Total</th>
+            <th className="border px-4 py-2 text-left text-white">Descripción</th>
+            <th className="border px-4 py-2 text-left text-white">Tipo</th>
           </tr>
         </thead>
         <tbody>
   {Array.isArray(sales) && sales.length > 0 ? (
     sales.map((sale) => (
-      <tr key={sale.id} className="border-b hover:bg-gray-100">
-        <td className="border px-4 py-2">
+      <tr key={sale.id} className="border-b text-white hover:bg-gray-100">
+        <td className="border px-4 py-2 text-white">
           {new Date(sale.date).toLocaleString()}
         </td>
-        <td className="border px-4 py-2">{sale.idStore}</td>
-        <td className="border px-4 py-2">${sale.total.toFixed(2)}</td>
-        <td className="border px-4 py-2">
+        <td className="border px-4 py-2 text-white">{sale.idStore}</td>
+        <td className="border px-4 py-2 text-white">${sale.total.toFixed(2)}</td>
+        <td className="border px-4 py-2 text-white">
   {sale.description.split("=!$").map((item, index) => (
     <div key={index}>{item}</div>
   ))}
