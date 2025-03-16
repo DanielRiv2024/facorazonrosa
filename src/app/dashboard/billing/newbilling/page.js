@@ -3,10 +3,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/app/navigation/navbar";
 import TopBar from "@/app/navigation/topbar";
-import { FaUber } from "react-icons/fa";
+import { FaUber, FaCcVisa, FaCcMastercard } from "react-icons/fa";
+import { SlScreenSmartphone } from "react-icons/sl";
+import { BsCash } from "react-icons/bs";
+import { GiReceiveMoney } from "react-icons/gi";
 
 export default function NewBilling() {
-  const [showNavbar, setShowNavbar] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(false);
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [search, setSearch] = useState("");
@@ -64,7 +67,8 @@ export default function NewBilling() {
 
   const getTotal = () => {
     return selectedProducts.reduce(
-      (sum, p) => sum + (parseFloat(p.price) || 0) * (parseInt(p.quantity) || 1),
+      (sum, p) =>
+        sum + (parseFloat(p.price) || 0) * (parseInt(p.quantity) || 1),
       0
     );
   };
@@ -86,15 +90,18 @@ export default function NewBilling() {
       type: selectedPayment,
     };
 
-    console.log(billingData)
+    console.log(billingData);
     try {
-      const response = await fetch(`https://bacorazonrosa.azurewebsites.net/billing?code=${API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(billingData),
-      });
+      const response = await fetch(
+        `https://bacorazonrosa.azurewebsites.net/billing?code=${API_KEY}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(billingData),
+        }
+      );
 
       if (!response.ok) throw new Error("Error al procesar el pago");
       router.push("/dashboard/billing");
@@ -106,12 +113,23 @@ export default function NewBilling() {
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
-      <div className={`text-white w-64 transition-all duration-300 ${showNavbar ? "translate-x-0" : "translate-x-[-100%]"}`}>
+      <div
+        className={`text-white w-64 transition-all duration-300 ${
+          showNavbar ? "translate-x-0" : "translate-x-[-100%]"
+        }`}
+      >
         <Navbar showNavbar={showNavbar} />
       </div>
 
-      <div className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"}`}>
-        <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />
+      <div
+        className={`flex flex-col transition-all duration-300 ${
+          showNavbar ? "ml-64" : "ml-0"
+        }`}
+      >
+        <TopBar
+          showNavbar={showNavbar}
+          toggleNavbar={() => setShowNavbar(!showNavbar)}
+        />
         <div className="h-px bg-white opacity-50"></div>
 
         <div className="bg-black text-white p-6 rounded-lg max-w-md mx-auto border border-white">
@@ -136,26 +154,32 @@ export default function NewBilling() {
           ))}
 
           {modalProduct && (
-            <div className="p-4 bg-gray-900 text-white border border-white rounded mt-4">
+            <div className="p-4 bg-neutral-800 text-white border border-white rounded mt-4">
               <h3 className="font-bold">{modalProduct.name}</h3>
+              <p className="text-white">
+                Cantidad
+              </p>
               <input
                 type="number"
                 min="1"
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
-                className="p-2 bg-gray-800 text-white border border-gray-600 rounded w-full mt-2"
+                className="p-2 bg-black text-white border border-white rounded w-full mt-2"
                 placeholder="Cantidad"
               />
+               <p className="text-white">
+                Precio
+              </p>
               <input
                 type="number"
                 value={customPrice}
                 onChange={(e) => setCustomPrice(e.target.value)}
-                className="p-2 bg-gray-800 text-white border border-gray-600 rounded w-full mt-2"
+                className="p-2 bg-black text-white border border-white rounded w-full mt-2"
                 placeholder="Precio"
               />
               <button
                 onClick={handleConfirmProduct}
-                className="p-2 bg-green-500 rounded mt-2 w-full font-bold"
+                className="p-2 bg-green-500 rounded mt-2 w-full font-bold border border-white"
               >
                 Agregar
               </button>
@@ -164,19 +188,71 @@ export default function NewBilling() {
 
           <h3 className="text-lg font-bold mt-4">Productos Seleccionados</h3>
           {selectedProducts.map((product, index) => (
-            <p key={index}>{product.name} x{product.quantity} - CRC {product.price}</p>
+            <p key={index}>
+              {product.name} x{product.quantity} - CRC {product.price}
+            </p>
           ))}
 
           <p className="text-lg font-bold mt-4">Total: CRC {getTotal()}</p>
 
           <div className="flex gap-2 mt-4">
-            <button onClick={() => setSelectedPayment(1)} className={`p-2 rounded font-bold w-full ${selectedPayment === 1 ? "bg-blue-600" : "bg-blue-500"}`}>💳 Tarjeta</button>
-            <button onClick={() => setSelectedPayment(2)} className={`p-2 rounded font-bold w-full ${selectedPayment === 2 ? "bg-purple-600" : "bg-purple-500"}`}>📲 Sinpe Móvil</button>
-            <button onClick={() => setSelectedPayment(3)} className={`p-2 rounded font-bold w-full ${selectedPayment === 3 ? "bg-orange-600" : "bg-orange-500"}`}>💵 Efectivo</button>
-            <button onClick={() => setSelectedPayment(4)} className={`p-2 rounded font-bold w-full ${selectedPayment === 4 ? "bg-black" : "bg-neutral-500"}`}><FaUber /> Uber</button>
+            <button
+              onClick={() => setSelectedPayment(1)}
+              className={`p-2 rounded font-bold flex-1 flex flex-col items-center text-center border border-white ${
+                selectedPayment === 1 ? "bg-neutral-800" : "bg-black"
+              }`}
+            >
+              <div className="flex flex-row gap-2 items-center justify-center">
+                <FaCcVisa />
+                <FaCcMastercard />
+              </div>
+              Tarjeta
+            </button>
+
+            <button
+              onClick={() => setSelectedPayment(2)}
+              className={`p-2 rounded font-bold flex-1 flex flex-col items-center text-center border border-white ${
+                selectedPayment === 2 ? "bg-neutral-800" : "bg-black"
+              }`}
+            >
+              <div className="flex flex-row gap-2 items-center justify-center">
+                <SlScreenSmartphone />
+              </div>
+              Sinpe
+            </button>
+
+            <button
+              onClick={() => setSelectedPayment(3)}
+              className={`p-2 rounded font-bold flex-1 flex flex-col items-center text-center border border-white ${
+                selectedPayment === 3 ? "bg-neutral-800" : "bg-black"
+              }`}
+            >
+              <div className="flex flex-row gap-2 items-center justify-center">
+                <BsCash />
+              </div>
+              Efectivo
+            </button>
+
+            <button
+              onClick={() => setSelectedPayment(4)}
+              className={`p-2 rounded font-bold flex-1 flex flex-col items-center text-center border border-white ${
+                selectedPayment === 4 ? "bg-neutral-800" : "bg-black"
+              }`}
+            >
+              <div className="flex flex-row gap-2 items-center justify-center">
+                <FaUber />
+              </div>
+              Uber
+            </button>
           </div>
 
-          <button onClick={handlePayment} className="text-black p-2 rounded font-bold w-full mt-4 bg-white">🏁 Finalizar y Pagar</button>
+          <button
+            onClick={handlePayment}
+            className="text-black p-2 rounded font-bold w-full mt-4 bg-white flex flex-col items-center justify-center text-center"
+          >
+            <GiReceiveMoney size={20}/>
+            Finalizar y Pagar
+          </button>
         </div>
       </div>
     </div>
