@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import TopBar from "@/app/navigation/topbar";
 import Navbar from "@/app/navigation/navbar";
 import ProductsTopBar from "./productsTopBar";
+import { MdDelete, MdEditSquare } from "react-icons/md";
 
 export default function ProductsPage() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -86,7 +87,7 @@ export default function ProductsPage() {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="border border-gray-700 p-4 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer flex flex-col items-center justify-center"
+                className="border border-white p-4 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer flex flex-col items-center justify-center"
               >
                 <img
                   src={product.image}
@@ -97,7 +98,7 @@ export default function ProductsPage() {
                   {product.name}
                 </h2>
                 <p className="text-gray-400 text-sm">{product.description}</p>
-                <div className="flex justify-between items-center mt-2">
+                <div className="flex justify-between items-center mt-2 w-full">
                   <span
                     className={`text-sm ${
                       product.status ? "text-green-500" : "text-red-500"
@@ -105,13 +106,27 @@ export default function ProductsPage() {
                   >
                     {product.status ? "Disponible" : "Agotado"}
                   </span>
+
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => router.push(`/edit/${product.id}`)}
+                      className="p-1 bg-black border border-white text-white rounded-md hover:bg-gray-800 transition-all"
+                    >
+                      <MdEditSquare size={17} color="yellow" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(product.id)}
+                      className="p-1 bg-black border border-white text-white rounded-md hover:bg-gray-800 transition-all"
+                    >
+                      <MdDelete size={17} color="red" />
+                    </button>
+                  </div>
                 </div>
-                <button
-                  onClick={() => handleDelete(product.id)}
-                  className="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md"
-                >
-                  Eliminar
-                </button>
+                <p className="text-xs font-bold ">
+                  {product.price === 1
+                    ? "Precio flexible"
+                    : `CRC ${product.price}`}
+                </p>
               </div>
             ))}
           </div>

@@ -38,7 +38,7 @@ export default function ProductsPage() {
               : item.type === 3
               ? "Efectivo"
               : item.type === 4
-              ? "Wix"
+              ? "Uber"
               : "Desconocido",
         }));
 
@@ -52,6 +52,9 @@ export default function ProductsPage() {
 
     fetchBillingData();
   }, []);
+  const totalPrice = billingData.reduce((sum, item) => sum + (item.total || 0), 0);
+  console.log(billingData)
+  console.log(totalPrice);
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
@@ -74,7 +77,7 @@ export default function ProductsPage() {
         />
         <div className="h-px bg-white opacity-50"></div>
         <div className="flex flex-col gap-4">
-          <BillingTopBar />
+        <BillingTopBar totalPrice={totalPrice}/>
           {loading ? (
             <p className="text-white">Loading billing data...</p>
           ) : error ? (

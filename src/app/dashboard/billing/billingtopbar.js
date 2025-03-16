@@ -1,11 +1,12 @@
 import { IoAddCircleOutline } from "react-icons/io5";
 import { IoIosArrowDropdown } from "react-icons/io";
 import Link from "next/link";
-export default function BillingTopBar() {
+export default function BillingTopBar({totalPrice}) {
+  console.log(totalPrice)
   return (
     <div className="flex items-center justify-between p-4 rounded-lg shadow">
       <span className="text-lg text-white font-semibold">
-        Total vendido: CRC 230 000
+        Total vendido: CRC {totalPrice}
       </span>
       <div className="flex flex-row items-center gap-2 hover:bg-[#1F1F22] p-2 rounded ">
         <span className="text-lg text-white font-semibold">23/05/25</span>

@@ -14,26 +14,32 @@ export default function BillingTable({ sales }) {
           </tr>
         </thead>
         <tbody>
-          {sales.length > 0 ? (
-            sales.map((sale) => (
-              <tr key={sale.id} className="border-b hover:bg-gray-100">
-                <td className="border px-4 py-2">
-                  {new Date(sale.date).toLocaleString()}
-                </td>
-                <td className="border px-4 py-2">{sale.idStore}</td>
-                <td className="border px-4 py-2">${sale.total.toFixed(2)}</td>
-                <td className="border px-4 py-2">{sale.description}</td>
-                <td className="border px-4 py-2">{sale.type}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="5" className="text-center py-4">
-                No billing records found.
-              </td>
-            </tr>
-          )}
-        </tbody>
+  {Array.isArray(sales) && sales.length > 0 ? (
+    sales.map((sale) => (
+      <tr key={sale.id} className="border-b hover:bg-gray-100">
+        <td className="border px-4 py-2">
+          {new Date(sale.date).toLocaleString()}
+        </td>
+        <td className="border px-4 py-2">{sale.idStore}</td>
+        <td className="border px-4 py-2">${sale.total.toFixed(2)}</td>
+        <td className="border px-4 py-2">
+  {sale.description.split("=!$").map((item, index) => (
+    <div key={index}>{item}</div>
+  ))}
+</td>
+
+        <td className="border px-4 py-2">{sale.type}</td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="5" className="text-center py-4">
+        No billing records found.
+      </td>
+    </tr>
+  )}
+</tbody>
+
       </table>
     </div>
   );

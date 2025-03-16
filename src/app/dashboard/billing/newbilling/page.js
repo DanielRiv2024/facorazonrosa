@@ -1,249 +1,184 @@
 "use client";
-
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "@/app/navigation/navbar";
-import TopBar from "../../../navigation/topbar";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { TbEditCircle, TbInvoice } from "react-icons/tb";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { RiPlayListAddLine } from "react-icons/ri";
+import TopBar from "@/app/navigation/topbar";
+import { FaUber } from "react-icons/fa";
 
-export default function NewBillingPage() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [sales, setSales] = useState([]);
-  const [extraCost, setExtraCost] = useState("");
-  const [showNavbar, setShowNavbar] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+export default function NewBilling() {
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [modalProduct, setModalProduct] = useState(null);
   const [customPrice, setCustomPrice] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+  const API_BILLING = process.NEXT_PUBLIC_API_URL_BILLING;
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await fetch(`${API_URL}?code=${API_KEY}`);
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status}`);
-        }
-
+        if (!response.ok) throw new Error("Error al obtener productos");
         const data = await response.json();
         setProducts(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.error("Error:", error);
+        alert("❌ No se pudieron cargar los productos.");
       }
     };
-
     fetchProducts();
   }, []);
 
-  const addProductToList = (product) => {
-    setSelectedProduct(product);
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+    setFilteredProducts(
+      products.filter((p) =>
+        p.name.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
+  };
+
+  const handleSelectProduct = (product) => {
+    setModalProduct(product);
     setCustomPrice(product.price);
     setQuantity(1);
   };
 
-  const handlePriceChange = (e) => {
-    setCustomPrice(e.target.value);
+  const handleConfirmProduct = () => {
+    if (modalProduct) {
+      setSelectedProducts([
+        ...selectedProducts,
+        { ...modalProduct, price: customPrice, quantity },
+      ]);
+      setModalProduct(null);
+      setSearch("");
+      setFilteredProducts([]);
+    }
   };
 
-  const handleQuantityChange = (e) => {
-    setQuantity(e.target.value);
+  const getTotal = () => {
+    return selectedProducts.reduce(
+      (sum, p) => sum + (parseFloat(p.price) || 0) * (parseInt(p.quantity) || 1),
+      0
+    );
   };
 
-  const confirmAddProductToList = () => {
-    if (!selectedProduct) return;
-    setSales((prevSales) => {
-      const existingProduct = prevSales.find(
-        (p) => p.id === selectedProduct.id
-      );
+  const handlePayment = async () => {
+    if (!selectedPayment) {
+      alert("❌ Selecciona un método de pago.");
+      return;
+    }
 
-      if (existingProduct) {
-        return prevSales.map((p) =>
-          p.id === selectedProduct.id
-            ? {
-                ...p,
-                itemsTotal: p.itemsTotal + parseInt(quantity, 10),
-                priceTotal:
-                  (p.customPrice + parseFloat(customPrice)) *
-                  parseInt(quantity, 10),
-              }
-            : p
-        );
-      } else {
-        return [
-          ...prevSales,
-          {
-            ...selectedProduct,
-            customPrice: parseFloat(customPrice),
-            priceTotal: parseFloat(customPrice) * parseInt(quantity, 10),
-            itemsTotal: parseInt(quantity, 10),
-          },
-        ];
-      }
-    });
+    const description = selectedProducts
+      .map((p) => `${p.name} x${p.quantity} = CRC ${p.price * p.quantity}`)
+      .join("=!$");
 
-    setSelectedProduct(null);
-    setCustomPrice("");
-    setQuantity(1);
-  };
+    const billingData = {
+      idStore: "1",
+      total: getTotal(),
+      description,
+      type: selectedPayment,
+    };
 
-  const removeProductFromList = (id) => {
-    setSales((prevSales) => prevSales.filter((p) => p.id !== id));
+    console.log(billingData)
+    try {
+      const response = await fetch(`https://bacorazonrosa.azurewebsites.net/billing?code=${API_KEY}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(billingData),
+      });
+
+      if (!response.ok) throw new Error("Error al procesar el pago");
+      router.push("/dashboard/billing");
+    } catch (error) {
+      console.error("Error:", error);
+      alert("❌ Hubo un problema al procesar el pago.");
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-black">
-      <div
-        className={`text-white w-64 transition-all duration-300 ${
-          showNavbar ? "translate-x-0" : "-translate-x-full"
-        } fixed top-0 left-0 h-full p-4`}
-      >
-        <Navbar />
+      <div className={`text-white w-64 transition-all duration-300 ${showNavbar ? "translate-x-0" : "translate-x-[-100%]"}`}>
+        <Navbar showNavbar={showNavbar} />
       </div>
 
-      <div
-        className={`flex-1 flex-col transition-all duration-300 ${
-          showNavbar ? "ml-64" : "ml-0"
-        }`}
-      >
-        <TopBar
-          showNavbar={showNavbar}
-          toggleNavbar={() => setShowNavbar(!showNavbar)}
-        />
-
+      <div className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"}`}>
+        <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />
         <div className="h-px bg-white opacity-50"></div>
-        <p className="text-2xl font-bold mt-5 ml-5">
-          Recuerda utilizar tu código de empleado para facturar
-        </p>
 
-        <div className="p-6 space-y-6 text-white">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="border border-white p-4 rounded-md shadow-lg gap-2">
-              <p className="mb-2">Busca tu producto...</p>
+        <div className="bg-black text-white p-6 rounded-lg max-w-md mx-auto border border-white">
+          <h2 className="text-xl font-bold mb-4">Nueva Facturación</h2>
+
+          <input
+            type="text"
+            placeholder="Buscar producto..."
+            value={search}
+            onChange={handleSearch}
+            className="p-2 bg-gray-800 text-white border border-gray-600 rounded w-full mb-2"
+          />
+
+          {filteredProducts.map((product) => (
+            <button
+              key={product.id}
+              onClick={() => handleSelectProduct(product)}
+              className="p-2 bg-gray-700 text-white border border-gray-500 rounded w-full text-left"
+            >
+              {product.name} - CRC {product.price}
+            </button>
+          ))}
+
+          {modalProduct && (
+            <div className="p-4 bg-gray-900 text-white border border-white rounded mt-4">
+              <h3 className="font-bold">{modalProduct.name}</h3>
               <input
-                type="text"
-                placeholder="Buscar producto"
-                className="w-full p-2 border border-white rounded-md text-white bg-neutral-900"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                type="number"
+                min="1"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+                className="p-2 bg-gray-800 text-white border border-gray-600 rounded w-full mt-2"
+                placeholder="Cantidad"
               />
-              {loading && (
-                <p className="text-white mt-2">Cargando productos...</p>
-              )}
-              {error && <p className="text-red-500 mt-2">Error: {error}</p>}
-              {searchTerm && products.length > 0 && (
-                <div className="mt-3 space-y-2">
-                  {products
-                    .filter((product) =>
-                      product.name
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())
-                    )
-                    .map((product) => (
-                      <div
-                        key={product.id}
-                        className="p-2 border-b rounded-md flex justify-between items-center cursor-pointer hover:bg-neutral-900"
-                        onClick={() => addProductToList(product)}
-                      >
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={product.image} 
-                            alt={product.name}
-                            className="w-12 h-12 object-cover rounded-md"
-                          />
-                        </div>
-                        <span>{product.name}</span>
-
-                        <button className="text-white px-2 py-1 rounded-lg">
-                          <RiPlayListAddLine size={20} />
-                        </button>
-                      </div>
-                    ))}
-                </div>
-              )}
+              <input
+                type="number"
+                value={customPrice}
+                onChange={(e) => setCustomPrice(e.target.value)}
+                className="p-2 bg-gray-800 text-white border border-gray-600 rounded w-full mt-2"
+                placeholder="Precio"
+              />
+              <button
+                onClick={handleConfirmProduct}
+                className="p-2 bg-green-500 rounded mt-2 w-full font-bold"
+              >
+                Agregar
+              </button>
             </div>
+          )}
 
-            <div className="bg-black p-4 rounded-md border border-white shadow-lg">
-              <h2 className="text-white mb-2">Productos Seleccionados</h2>
-              <table className="w-full text-white border-collapse">
-                <thead>
-                  <tr>
-                    <th className="border-b p-2 text-left">Producto</th>
-                    <th className="text-start border-b p-2">Cantidad</th>
-                    <th className="text-start border-b">Precio</th>
-                    <th className="text-start border-b"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {sales.map((sale) => (
-                    <tr
-                      key={sale.id}
-                      className="text-white border-b border-gray-700"
-                    >
-                      <td className="p-2 text-start">
-                        {sale.name || "Producto"}
-                      </td>
-                      <td className="p-2 text-start">{sale.itemsTotal}</td>
-                      <td className="text-right text-start text-green-500">
-                        ₡{sale.priceTotal.toFixed(2)}
-                      </td>
-                      <td className="text-right">
-                        <div className="flex flex-row gap-5 items-center justify-center">
-                          <button onClick={() => addProductToList(sale)}>
-                            <TbEditCircle size={25} color="yellow" />
-                          </button>
-                          <button
-                            onClick={() => removeProductFromList(sale.id)}
-                          >
-                            <IoMdCloseCircleOutline size={25} color="red" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <h3 className="text-lg font-bold mt-4">Productos Seleccionados</h3>
+          {selectedProducts.map((product, index) => (
+            <p key={index}>{product.name} x{product.quantity} - CRC {product.price}</p>
+          ))}
+
+          <p className="text-lg font-bold mt-4">Total: CRC {getTotal()}</p>
+
+          <div className="flex gap-2 mt-4">
+            <button onClick={() => setSelectedPayment(1)} className={`p-2 rounded font-bold w-full ${selectedPayment === 1 ? "bg-blue-600" : "bg-blue-500"}`}>💳 Tarjeta</button>
+            <button onClick={() => setSelectedPayment(2)} className={`p-2 rounded font-bold w-full ${selectedPayment === 2 ? "bg-purple-600" : "bg-purple-500"}`}>📲 Sinpe Móvil</button>
+            <button onClick={() => setSelectedPayment(3)} className={`p-2 rounded font-bold w-full ${selectedPayment === 3 ? "bg-orange-600" : "bg-orange-500"}`}>💵 Efectivo</button>
+            <button onClick={() => setSelectedPayment(4)} className={`p-2 rounded font-bold w-full ${selectedPayment === 4 ? "bg-black" : "bg-neutral-500"}`}><FaUber /> Uber</button>
           </div>
+
+          <button onClick={handlePayment} className="text-black p-2 rounded font-bold w-full mt-4 bg-white">🏁 Finalizar y Pagar</button>
         </div>
       </div>
-
-      {selectedProduct && (
-        <div className="fixed inset-0 bg-black/85 flex justify-center items-center z-50">
-          <div className="bg-black p-6 rounded-xl border-white border w-96">
-            <h3 className="text-white font-bold text-lg mb-4">
-              Selecciona el precio y cantidad para {selectedProduct.name}
-            </h3>
-            <input
-              type="number"
-              value={customPrice}
-              onChange={handlePriceChange}
-              className="w-full p-2 border border-white rounded-lg text-white bg-neutral-900 mb-4"
-            />
-            <input
-              type="number"
-              value={quantity}
-              onChange={handleQuantityChange}
-              min="1"
-              className="w-full p-2 border border-white rounded-lg text-white bg-neutral-900 mb-4"
-            />
-            <button
-              className="bg-green-500 px-4 py-2 rounded-lg"
-              onClick={confirmAddProductToList}
-            >
-              <FaRegCheckCircle size={20} /> Confirmar
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
