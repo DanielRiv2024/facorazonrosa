@@ -6,7 +6,6 @@ import TopBar from "@/app/navigation/topbar";
 import { FaUber, FaCcVisa, FaCcMastercard } from "react-icons/fa";
 import { SlScreenSmartphone } from "react-icons/sl";
 import { BsCash } from "react-icons/bs";
-import { GiReceiveMoney } from "react-icons/gi";
 
 export default function NewBilling() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -21,7 +20,6 @@ export default function NewBilling() {
   const [description, setDescription] = useState("");
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-  const API_BILLING = process.NEXT_PUBLIC_API_URL_BILLING;
   const router = useRouter();
 
   useEffect(() => {
@@ -91,8 +89,6 @@ export default function NewBilling() {
       description,
       type: selectedPayment,
     };
-
-    console.log(billingData);
     try {
       const response = await fetch(
         `https://bacorazonrosa.azurewebsites.net/billing?code=${API_KEY}`,
@@ -134,7 +130,7 @@ export default function NewBilling() {
         />
         <div className="h-px bg-white opacity-50"></div>
 
-        <div className="bg-black text-white p-6 rounded-lg max-w-md mx-auto border border-white">
+        <div className="bg-black text-white p-6 rounded-lg max-w-md mx-auto border border-white mt-10">
           <h2 className="text-xl font-bold mb-4">Nueva Facturación</h2>
 
           <input
@@ -155,55 +151,55 @@ export default function NewBilling() {
             </button>
           ))}
 
-{modalProduct && (
-        <div className="fixed inset-0 bg-black/75 bg-opacity-10 flex items-center justify-center z-50">
-          <div className="p-6 bg-neutral-900 text-white border border-white rounded-lg w-96 shadow-lg">
-            <h3 className="font-bold text-lg">{modalProduct.name}</h3>
+          {modalProduct && (
+            <div className="fixed inset-0 bg-black/75 bg-opacity-10 flex items-center justify-center z-50">
+              <div className="p-6 bg-neutral-900 text-white border border-white rounded-lg w-96 shadow-lg">
+                <h3 className="font-bold text-lg">{modalProduct.name}</h3>
 
-            <p className="text-white mt-4">Cantidad</p>
-            <input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-              className="p-2 bg-black text-white border border-white rounded w-full mt-2"
-              placeholder="Cantidad"
-            />
+                <p className="text-white mt-4">Cantidad</p>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
+                  className="p-2 bg-black text-white border border-white rounded w-full mt-2"
+                  placeholder="Cantidad"
+                />
 
-            <p className="text-white mt-4">Precio</p>
-            <input
-              type="number"
-              value={customPrice}
-              onChange={(e) => setCustomPrice(e.target.value)}
-              className="p-2 bg-black text-white border border-white rounded w-full mt-2"
-              placeholder="Precio"
-            />
+                <p className="text-white mt-4">Precio</p>
+                <input
+                  type="number"
+                  value={customPrice}
+                  onChange={(e) => setCustomPrice(e.target.value)}
+                  className="p-2 bg-black text-white border border-white rounded w-full mt-2"
+                  placeholder="Precio"
+                />
 
-            <p className="text-white mt-4">Descripción</p>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="p-2 bg-black text-white border border-white rounded w-full mt-2"
-              placeholder="Descripción del producto"
-            />
+                <p className="text-white mt-4">Descripción</p>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="p-2 bg-black text-white border border-white rounded w-full mt-2"
+                  placeholder="Descripción del producto"
+                />
 
-            <div className="flex justify-between mt-4">
-              <button
-                onClick={() => setModalProduct(null)}
-                className="p-2 bg-red-500 rounded w-1/2 font-bold border border-white mr-2"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={handleConfirmProduct}
-                className="p-2 bg-green-500 rounded w-1/2 font-bold border border-white"
-              >
-                Agregar
-              </button>
+                <div className="flex justify-between mt-4">
+                  <button
+                    onClick={() => setModalProduct(null)}
+                    className="p-2 bg-red-500 rounded w-1/2 font-bold border border-white mr-2"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={handleConfirmProduct}
+                    className="p-2 bg-green-500 rounded w-1/2 font-bold border border-white"
+                  >
+                    Agregar
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
           <h3 className="text-lg font-bold mt-4">Productos Seleccionados</h3>
           {selectedProducts.map((product, index) => (
