@@ -18,6 +18,7 @@ export default function NewBilling() {
   const [modalProduct, setModalProduct] = useState(null);
   const [customPrice, setCustomPrice] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [description, setDescription] = useState("");
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
   const API_BILLING = process.NEXT_PUBLIC_API_URL_BILLING;
@@ -51,13 +52,14 @@ export default function NewBilling() {
     setModalProduct(product);
     setCustomPrice(product.price);
     setQuantity(1);
+    setDescription("");
   };
 
   const handleConfirmProduct = () => {
     if (modalProduct) {
       setSelectedProducts([
         ...selectedProducts,
-        { ...modalProduct, price: customPrice, quantity },
+        { ...modalProduct, price: customPrice, quantity, description },
       ]);
       setModalProduct(null);
       setSearch("");
@@ -80,7 +82,7 @@ export default function NewBilling() {
     }
 
     const description = selectedProducts
-      .map((p) => `${p.name} x${p.quantity} = CRC ${p.price * p.quantity}`)
+      .map((p) => `${p.quantity} ${p.name} CRC${p.price} / ${p.description}`)
       .join("=!$");
 
     const billingData = {
@@ -153,43 +155,60 @@ export default function NewBilling() {
             </button>
           ))}
 
-          {modalProduct && (
-            <div className="p-4 bg-neutral-800 text-white border border-white rounded mt-4">
-              <h3 className="font-bold">{modalProduct.name}</h3>
-              <p className="text-white">
-                Cantidad
-              </p>
-              <input
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
-                className="p-2 bg-black text-white border border-white rounded w-full mt-2"
-                placeholder="Cantidad"
-              />
-               <p className="text-white">
-                Precio
-              </p>
-              <input
-                type="number"
-                value={customPrice}
-                onChange={(e) => setCustomPrice(e.target.value)}
-                className="p-2 bg-black text-white border border-white rounded w-full mt-2"
-                placeholder="Precio"
-              />
+{modalProduct && (
+        <div className="fixed inset-0 bg-black/75 bg-opacity-10 flex items-center justify-center z-50">
+          <div className="p-6 bg-neutral-900 text-white border border-white rounded-lg w-96 shadow-lg">
+            <h3 className="font-bold text-lg">{modalProduct.name}</h3>
+
+            <p className="text-white mt-4">Cantidad</p>
+            <input
+              type="number"
+              min="1"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              className="p-2 bg-black text-white border border-white rounded w-full mt-2"
+              placeholder="Cantidad"
+            />
+
+            <p className="text-white mt-4">Precio</p>
+            <input
+              type="number"
+              value={customPrice}
+              onChange={(e) => setCustomPrice(e.target.value)}
+              className="p-2 bg-black text-white border border-white rounded w-full mt-2"
+              placeholder="Precio"
+            />
+
+            <p className="text-white mt-4">Descripción</p>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="p-2 bg-black text-white border border-white rounded w-full mt-2"
+              placeholder="Descripción del producto"
+            />
+
+            <div className="flex justify-between mt-4">
+              <button
+                onClick={() => setModalProduct(null)}
+                className="p-2 bg-red-500 rounded w-1/2 font-bold border border-white mr-2"
+              >
+                Cancelar
+              </button>
               <button
                 onClick={handleConfirmProduct}
-                className="p-2 bg-green-500 rounded mt-2 w-full font-bold border border-white"
+                className="p-2 bg-green-500 rounded w-1/2 font-bold border border-white"
               >
                 Agregar
               </button>
             </div>
-          )}
+          </div>
+        </div>
+      )}
 
           <h3 className="text-lg font-bold mt-4">Productos Seleccionados</h3>
           {selectedProducts.map((product, index) => (
             <p key={index}>
-              {product.name} x{product.quantity} - CRC {product.price}
+              {product.name} x{product.quantity} / {product.description}
             </p>
           ))}
 
@@ -250,8 +269,7 @@ export default function NewBilling() {
             onClick={handlePayment}
             className="text-black p-2 rounded font-bold w-full mt-4 bg-white flex flex-col items-center justify-center text-center"
           >
-            <GiReceiveMoney size={20}/>
-            Finalizar y Pagar
+            Finalizar y Pagar CRC {getTotal()}
           </button>
         </div>
       </div>
