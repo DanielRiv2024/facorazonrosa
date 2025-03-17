@@ -7,13 +7,11 @@ import { FaUber, FaCcVisa, FaCcMastercard } from "react-icons/fa";
 import { SlScreenSmartphone } from "react-icons/sl";
 import { BsCash } from "react-icons/bs";
 
-
 const branches = [
   { id: "1", name: "Lindora" },
   { id: "2", name: "Escazu" },
   { id: "3", name: "Sucursal Alajuela" },
 ];
-
 
 export default function NewBilling() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -30,7 +28,6 @@ export default function NewBilling() {
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
   const router = useRouter();
   const [store, setStore] = useState(branches[0].id);
-
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -141,18 +138,20 @@ export default function NewBilling() {
         <div className="h-px bg-white opacity-50"></div>
 
         <div className="bg-black text-white p-6 rounded-lg max-w-md mx-auto border border-white mt-10">
-          <h2 className="text-xl font-bold mb-4">Nueva Facturación</h2>
-          <select
-        className="bg-black text-white border border-white p-2 rounded-lg cursor-pointer"
-        value={store}
-        onChange={(e) => setStore(e.target.value)}
-      >
-        {branches.map((branch) => (
-          <option key={branch.id} value={branch.id}>
-            {branch.name}
-          </option>
-        ))}
-      </select>
+          <div className="flex flex-row gap-4 items-center justify-center text-center mb-7">
+            <h2 className="text-xl font-bold">Nueva Facturación</h2>
+            <select
+              className="bg-black text-white border border-white p-2 rounded-lg cursor-pointer"
+              value={store}
+              onChange={(e) => setStore(e.target.value)}
+            >
+              {branches.map((branch) => (
+                <option key={branch.id} value={branch.id}>
+                  {branch.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <input
             type="text"
