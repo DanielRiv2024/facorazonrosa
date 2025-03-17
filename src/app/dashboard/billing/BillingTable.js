@@ -1,13 +1,11 @@
 import React from "react";
 import { MdDeleteOutline } from "react-icons/md";
+import { FaRegFrownOpen } from "react-icons/fa";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export default function BillingTable({ sales, fetchSales }) {
-
   const handleDelete = async (id) => {
-    console.log(id)
     if (!id) return;
     const confirmDelete = window.confirm("¿Estás seguro de que deseas eliminar esta venta?");
     if (!confirmDelete) return;
@@ -27,6 +25,7 @@ export default function BillingTable({ sales, fetchSales }) {
       alert("Venta eliminada correctamente");
       window.location.reload();
     } catch (error) {
+      console.error("Error al eliminar la venta:", error);
     }
   };
 
@@ -36,7 +35,6 @@ export default function BillingTable({ sales, fetchSales }) {
         <thead>
           <tr className="bg-neutral-900">
             <th className="border px-4 py-2 text-left text-white">Fecha y Hora</th>
-            <th className="border px-4 py-2 text-left text-white">Sucursal</th>
             <th className="border px-4 py-2 text-left text-white">Descripción</th>
             <th className="border px-4 py-2 text-left text-white">Total</th>
             <th className="border px-4 py-2 text-left text-white">Tipo</th>
@@ -50,7 +48,6 @@ export default function BillingTable({ sales, fetchSales }) {
                 <td className="border px-4 py-2 text-white">
                   {new Date(sale.date).toLocaleString()}
                 </td>
-                <td className="border px-4 py-2 text-white">{sale.idStore}</td>
                 <td className="border px-4 py-2 text-white">
                   {sale.description.split("=!$").map((item, index) => (
                     <div key={index}>{item}</div>
@@ -70,8 +67,8 @@ export default function BillingTable({ sales, fetchSales }) {
             ))
           ) : (
             <tr>
-              <td colSpan="6" className="text-center py-4 text-white">
-                No billing records found.
+              <td colSpan="6" className="text-center py-4 text-white text-3xl">
+                <FaRegFrownOpen />
               </td>
             </tr>
           )}

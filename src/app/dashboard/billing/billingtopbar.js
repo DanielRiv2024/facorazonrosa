@@ -4,40 +4,48 @@ import Link from "next/link";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
-import { es } from "date-fns/locale"; // Para formato en español
+import { es } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-export default function BillingTopBar({ totalPrice, exportToExcel }) {
+const branches = [
+  { id: "1", name: "Lindora" },
+  { id: "2", name: "Escazu" },
+  { id: "3", name: "Sucursal Alajuela" },
+];
 
-  const [selectedDate, setSelectedDate] = useState(new Date());
+export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDate, setIdStore }) {
+  const [selectedDate, localSetSelectedDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
+  const [store, setStore] = useState(branches[0].id); 
   const calendarRef = useRef(null);
-
+console.log("FDCHA DEL TOP", selectedDate)
   useEffect(() => {
     function handleClickOutside(event) {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setShowCalendar(false);
       }
     }
-
     if (showCalendar) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showCalendar]);
+
+  useEffect(() => {
+    setSelectedDate(selectedDate);
+    setIdStore(store);
+  }, [selectedDate, store]);
+
   return (
     <div className="flex items-center justify-between p-4 rounded-lg shadow">
-      <span className="text-lg text-white font-semibold">
-        CRC {totalPrice.toFixed(2)}
-      </span>
+      <span className="text-lg text-white font-semibold">CRC {totalPrice.toFixed(2)}</span>
       
       <div className="relative" ref={calendarRef}>
         <div
-          className="flex items-center gap-2 hover:bg-[#1F1F22] p-2 rounded cursor-pointer"
+          className="flex items-center gap-2 hover:bg-[#1F1F22] p-2 rounded cursor-pointer text-red-500"
           onClick={() => setShowCalendar(!showCalendar)}
         >
           <span className="text-lg text-white font-semibold">
@@ -50,21 +58,24 @@ export default function BillingTopBar({ totalPrice, exportToExcel }) {
             <DayPicker
               mode="single"
               selected={selectedDate}
-              onSelect={(date) => {
-                if (date) {
-                  setSelectedDate(date);
-                  setShowCalendar(false); // Ocultar el calendario después de seleccionar
-                }
-              }}
+              onSelect={(date) => date && localSetSelectedDate(date)}
             />
           </div>
         )}
       </div>
 
-      <div className="flex flex-row items-center gap-2 hover:bg-[#1F1F22] p-2 rounded">
-        <span className="text-lg text-white font-semibold">Lindora</span>
-        <IoIosArrowDropdown size={20} />
-      </div>
+      {/* Selector de sucursales */}
+      <select
+        className="bg-black text-white border border-white p-2 rounded-lg cursor-pointer"
+        value={store}
+        onChange={(e) => setStore(e.target.value)}
+      >
+        {branches.map((branch) => (
+          <option key={branch.id} value={branch.id}>
+            {branch.name}
+          </option>
+        ))}
+      </select>
 
 
       <div className="flex gap-4">

@@ -12,7 +12,7 @@ export default function Navbar({ show }) {
         { name: 'Personal', icon: <HiUser size={20} />, path: '/personal' },
         { name: 'Pedidos', icon: <HiShoppingCart size={20} />, path: '/pedidos' },
         { name: 'Facturación', icon: <HiReceiptTax size={20} />, path: '/dashboard/billing' },
-        { name: 'Sucursales', icon: <HiLocationMarker size={20} />, path: '/sucursales' },
+        { name: 'Sucursales', icon: <HiLocationMarker size={20} />, path: '/dashboard/stores' },
         { name: 'Eventos', icon: <HiCalendar size={20} />, path: '/eventos' },
     ];
 
