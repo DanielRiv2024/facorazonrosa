@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HiHome, HiCube, HiArchive, HiUser, HiShoppingCart, HiReceiptTax, HiLocationMarker, HiCalendar } from "react-icons/hi";
-
+import { FaRegTrashAlt } from "react-icons/fa";
 export default function Navbar({ show }) {
     const pathname = usePathname();
 
@@ -12,6 +12,7 @@ export default function Navbar({ show }) {
         { name: 'Personal', icon: <HiUser size={20} />, path: '/personal' },
         { name: 'Pedidos', icon: <HiShoppingCart size={20} />, path: '/pedidos' },
         { name: 'Facturación', icon: <HiReceiptTax size={20} />, path: '/dashboard/billing' },
+        { name: 'Perdida', icon: <FaRegTrashAlt size={20} />, path: '/dashboard/loss' },
         { name: 'Sucursales', icon: <HiLocationMarker size={20} />, path: '/dashboard/stores' },
         { name: 'Eventos', icon: <HiCalendar size={20} />, path: '/eventos' },
     ];

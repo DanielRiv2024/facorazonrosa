@@ -19,7 +19,6 @@ export default function BillingPage() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [idStore, setIdStore] = useState("1");
 
-  const router = useRouter();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
   useEffect(() => {

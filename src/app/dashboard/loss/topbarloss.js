@@ -14,7 +14,7 @@ const branches = [
   { id: "3", name: "Sucursal Alajuela" },
 ];
 
-export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDate, setIdStore }) {
+export default function TopBarLoss({ totalPrice, exportToExcel, setSelectedDate, setIdStore }) {
   const [selectedDate, localSetSelectedDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
   const [store, setStore] = useState(() => {
@@ -48,7 +48,7 @@ export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDa
 
   return (
     <div className="flex items-center justify-between p-4 rounded-lg shadow">
-      <span className="text-lg text-white font-semibold">CRC {totalPrice.toFixed(2)}</span>
+      <span className="text-lg text-white font-semibold">CRC {totalPrice}</span>
       <div className="relative" ref={calendarRef}>
         <div
           className="flex items-center gap-2 hover:bg-[#1F1F22] p-2 rounded cursor-pointer text-red-500"
@@ -84,7 +84,7 @@ export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDa
       <div className="flex gap-4">
         <Link
           className="flex items-center gap-2 text-white bg-[#1F1F22] px-4 py-2 rounded-lg hover:opacity-80"
-          href={"/dashboard/billing/newbilling"}
+          href={"/dashboard/loss/new"}
         >
           <IoAddCircleOutline size={20} />
           Agregar
