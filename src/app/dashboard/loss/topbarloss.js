@@ -8,7 +8,11 @@ import { es } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 
-
+const branches = [
+    { id: "1", name: "Lindora" },
+    { id: "2", name: "Escazu" },
+    { id: "3", name: "Sucursal Alajuela" },
+  ];
 
 export default function TopBarLoss({
   totalPrice,
