@@ -63,26 +63,25 @@ export default function NewProduct() {
       <div className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"}`}>
         <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />
         <div className="h-px bg-white opacity-50"></div>
-
-        <div className="bg-black text-white p-6 rounded-lg max-w-md mx-auto border border-white">
-          <h2 className="text-xl font-bold mb-4">Agregar Nuevo Producto</h2>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            <input type="text" placeholder="Nombre" className="p-2 bg-gray-800 text-white border border-gray-600 rounded"
+        <div className="p-4">
+        <h2 className="text-xl font-bold mb-4">Agregar Nuevo Producto</h2>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <input type="text" placeholder="Nombre" className="p-2 bg-neutral-900 text-white   rounded"
               value={name} onChange={(e) => setName(e.target.value)} required />
 
-            <input type="number" placeholder="Precio" className="p-2 bg-gray-800 text-white border border-gray-600 rounded"
+            <input type="number" placeholder="Precio" className="p-2 bg-neutral-900 text-white   rounded"
               value={price} onChange={(e) => setPrice(e.target.value)} required />
 
-            <input type="text" placeholder="Categorías (Ej: 1,2,3)" className="p-2 bg-gray-800 text-white border border-gray-600 rounded"
+            <input type="text" placeholder="Categorías (Ej: 1,2,3)" className="p-2 bg-neutral-900 text-white   rounded"
               value={categories} onChange={(e) => setCategories(e.target.value)} required />
 
-            <textarea placeholder="Descripción" className="p-2 bg-gray-800 text-white border border-gray-600 rounded"
+            <textarea placeholder="Descripción" className="p-2 bg-neutral-900 text-white   rounded"
               value={description} onChange={(e) => setDescription(e.target.value)} required />
 
-            <input type="text" placeholder="URL de la imagen" className="p-2 bg-gray-800 text-white border border-gray-600 rounded"
+            <input type="text" placeholder="URL de la imagen" className="p-2 bg-neutral-900 text-white   rounded"
               value={image} onChange={(e) => setImage(e.target.value)} required />
 
-            <select className="p-2 bg-gray-800 text-white border border-gray-600 rounded"
+            <select className="p-2 bg-neutral-900 text-white   rounded"
               value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="disponible">Disponible</option>
               <option value="agotado">Agotado</option>
@@ -91,6 +90,7 @@ export default function NewProduct() {
             <button type="submit" className="bg-white text-black p-2 rounded font-bold">Agregar Producto</button>
           </form>
         </div>
+       
       </div>
     </div>
   );

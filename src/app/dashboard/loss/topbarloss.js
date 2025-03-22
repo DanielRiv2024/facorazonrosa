@@ -14,7 +14,12 @@ const branches = [
   { id: "3", name: "Sucursal Alajuela" },
 ];
 
-export default function TopBarLoss({ totalPrice, exportToExcel, setSelectedDate, setIdStore }) {
+export default function TopBarLoss({
+  totalPrice,
+  exportToExcel,
+  setSelectedDate,
+  setIdStore,
+}) {
   const [selectedDate, localSetSelectedDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
   const [store, setStore] = useState(() => {
@@ -38,13 +43,11 @@ export default function TopBarLoss({ totalPrice, exportToExcel, setSelectedDate,
 
   useEffect(() => {
     setSelectedDate(selectedDate);
-  
+
     // Guardar la preferencia en localStorage y actualizar el estado global
     setIdStore(store);
     localStorage.setItem("preferredStore", store);
   }, [selectedDate, store]);
-  
-  
 
   return (
     <div className="flex items-center justify-between p-4 rounded-lg shadow">
@@ -72,15 +75,14 @@ export default function TopBarLoss({ totalPrice, exportToExcel, setSelectedDate,
       <select
         className="bg-black text-white border border-white p-2 rounded-lg cursor-pointer"
         value={store}
-        onChange={(e) => setStore(e.target.value)}>
+        onChange={(e) => setStore(e.target.value)}
+      >
         {branches.map((branch) => (
           <option key={branch.id} value={branch.id}>
             {branch.name}
           </option>
         ))}
       </select>
-
-
       <div className="flex gap-4">
         <Link
           className="flex items-center gap-2 text-white bg-[#1F1F22] px-4 py-2 rounded-lg hover:opacity-80"
@@ -91,9 +93,8 @@ export default function TopBarLoss({ totalPrice, exportToExcel, setSelectedDate,
         </Link>
         <button
           onClick={exportToExcel}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700"
-        >
-          <RiFileExcel2Line size={24}/>
+          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+          <RiFileExcel2Line size={24} />
         </button>
       </div>
     </div>

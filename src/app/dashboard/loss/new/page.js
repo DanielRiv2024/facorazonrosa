@@ -40,6 +40,8 @@ export default function LossReport() {
       <div className={`flex-1 flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"}`}>
         <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />
         <div className="h-px bg-white opacity-50"></div>
+
+
         <div className="p-4">
           <h2 className="text-xl font-bold">Reporte de Pérdidas</h2>
           <form onSubmit={handleSubmit} className="mt-4 space-y-4">
@@ -96,9 +98,12 @@ export default function LossReport() {
                 accept="image/*"
               />
             </div>
-            <button type="submit" className="bg-red-600 px-4 py-2 rounded text-white">
+            <div>
+            <button type="submit" className="w-full bg-red-600 px-4 py-2 rounded text-white">
               Reportar Pérdida
             </button>
+            </div>
+            
           </form>
         </div>
       </div>
