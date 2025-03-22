@@ -17,9 +17,7 @@ const branches = [
 export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDate, setIdStore }) {
   const [selectedDate, localSetSelectedDate] = useState(new Date());
   const [showCalendar, setShowCalendar] = useState(false);
-  const [store, setStore] = useState(() => {
-    return localStorage.getItem("preferredStore") || "1";
-  });
+  const [store, setStore] = useState("1");
   const calendarRef = useRef(null);
 
   useEffect(() => {
