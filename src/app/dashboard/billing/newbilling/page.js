@@ -168,7 +168,7 @@ export default function NewBilling() {
         <button
           key={product.id}
           onClick={() => handleSelectProduct(product)}
-          className="p-2 bg-gray-700 text-white border border-gray-500 rounded w-full text-left"
+          className="p-2 bg-neutral-900 text-white border border-gray-500 rounded w-full text-left"
         >
           {product.name} - CRC {product.price}
         </button>
