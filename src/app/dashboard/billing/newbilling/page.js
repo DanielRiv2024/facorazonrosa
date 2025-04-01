@@ -140,7 +140,7 @@ export default function NewBilling() {
         <div className="h-px bg-white opacity-50"></div>
 
         
-        <div className="bg-black text-white p-6 rounded-lg border border-white mt-10 mx-10">
+        <div className="bg-black text-white p-6 rounded-lg border border-white mt-10 mx-4">
       <div className="flex flex-col sm:flex-row gap-4 items-center justify-center text-center mb-7">
         <h2 className="text-xl font-bold">Nueva Facturación</h2>
         <select
@@ -161,7 +161,7 @@ export default function NewBilling() {
         placeholder="Buscar producto..."
         value={search}
         onChange={handleSearch}
-        className="p-2 bg-gray-800 text-white border border-gray-600 rounded w-full mb-2"
+        className="p-2 bg-white text-black border border-neutral-900 rounded w-full mb-2 transition-colors duration-200 hover:border-green-600"
       />
 
       {filteredProducts.map((product) => (
