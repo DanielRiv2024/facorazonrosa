@@ -6,6 +6,8 @@ import TopBar from "@/app/navigation/topbar";
 import { FaUber, FaCcVisa, FaCcMastercard } from "react-icons/fa";
 import { SlScreenSmartphone } from "react-icons/sl";
 import { BsCash } from "react-icons/bs";
+import { AiOutlineGlobal } from "react-icons/ai";
+
 
 const branches = [
   { id: "1", name: "Lindora" },
@@ -278,6 +280,17 @@ export default function NewBilling() {
                 <FaUber />
               </div>
               Uber
+            </button>
+            <button
+              onClick={() => setSelectedPayment(4)}
+              className={`p-2 rounded font-bold flex-1 flex flex-col items-center text-center border border-white ${
+                selectedPayment === 5 ? "bg-neutral-800" : "bg-black"
+              }`}
+            >
+              <div className="flex flex-row gap-2 items-center justify-center">
+                <AiOutlineGlobal />
+              </div>
+              Pagina
             </button>
           </div>
 
