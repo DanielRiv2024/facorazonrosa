@@ -100,7 +100,7 @@ export default function NewBilling() {
     };
     try {
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/billing?code=${API_KEY}`,
+        `https://bacorazonrosa.azurewebsites.net/api/billing?code=${API_KEY}`,
         {
           method: "POST",
           headers: {
