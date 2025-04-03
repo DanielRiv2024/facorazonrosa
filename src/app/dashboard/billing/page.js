@@ -38,6 +38,7 @@ export default function BillingPage() {
     setLoading(true);
     setError(null); // Reiniciar errores previos
     setBillingData([]); // Limpiar datos previos
+    //tttt
 
     try {
       console.log("Fecha recibida:", selectedDate);
