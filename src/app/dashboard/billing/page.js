@@ -43,7 +43,7 @@ export default function BillingPage() {
       console.log("Fecha recibida:", selectedDate);
       const formattedDate = format(selectedDate, "yyyy-MM-dd");
       console.log("Fecha formateada:", formattedDate);
-
+// testing
       const response = await fetch(
         `https://bacorazonrosa.azurewebsites.net/billing/filter?date=${formattedDate}&idStore=${idStore}&code=${API_KEY}`
       );
