@@ -100,7 +100,7 @@ export default function NewBilling() {
     };
     try {
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/billing?code=${API_KEY}`,
+        `https://bacorazonrosa.azurewebsites.net/api/CreateBilling?code=${API_KEY}`,
         {
           method: "POST",
           headers: {
@@ -168,7 +168,7 @@ export default function NewBilling() {
         <button
           key={product.id}
           onClick={() => handleSelectProduct(product)}
-          className="p-2 bg-neutral-900 text-white border border-white mb-1 rounded w-full text-left"
+          className="p-2 bg-neutral-900 text-white border border-white mb-14 rounded w-full text-left"
         >
           {product.name} - CRC {product.price}
         </button>
