@@ -36,6 +36,7 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
+  
   const handleDelete = async (id) => {
     if (!window.confirm("¿Seguro que quieres eliminar este producto?")) return;
 
