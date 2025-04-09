@@ -68,23 +68,12 @@ export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDa
           )}
         </div>
       </div>
-
+      
       {/* Sucursal y Botones en una nueva línea en móviles */}
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
         
         {/* Selector de sucursal */}
-        <select
-          className="bg-black text-white border border-white p-2 rounded-lg cursor-pointer w-full sm:w-auto"
-          value={store}
-          onChange={(e) => setStore(e.target.value)}
-        >
-          {branches.map((branch) => (
-            <option key={branch.id} value={branch.id}>
-              {branch.name}
-            </option>
-          ))}
-        </select>
-
+      
         {/* Botones */}
         <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 w-full sm:w-auto">
           <Link
@@ -106,3 +95,17 @@ export default function BillingTopBar({ totalPrice, exportToExcel, setSelectedDa
     </div>
   );
 }
+/*
+  <select
+          className="bg-black text-white border border-white p-2 rounded-lg cursor-pointer w-full sm:w-auto"
+          value={store}
+          onChange={(e) => setStore(e.target.value)}
+        >
+          {branches.map((branch) => (
+            <option key={branch.id} value={branch.id}>
+              {branch.name}
+            </option>
+          ))}
+        </select>
+
+*/

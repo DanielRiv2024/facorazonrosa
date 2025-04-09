@@ -11,7 +11,8 @@ export default function TopBar({ showNavbar, toggleNavbar }) {
   const router = useRouter();
   const pathname = usePathname();
   const [userData, setUserData] = useState(null);
-
+  const [store, setStore] = useState(null);
+  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
   const breadcrumbs = pathname
     .split("/")
     .filter((segment) => segment)
@@ -28,7 +29,35 @@ export default function TopBar({ showNavbar, toggleNavbar }) {
       setUserData(user);
     }
   }, []);
-console.log(userData?.userImage)
+
+  useEffect(() => {
+    console.log("llamando la funcion")
+    const userCode = localStorage.getItem("userCode");  // Recuperamos el userCode del localStorage
+    if (userCode) {
+      fetchStoreId(userCode);
+    }
+  }, []);
+  
+  const fetchStoreId = async (userCode) => {
+    try {
+      const response = await fetch(
+        `https://bacorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
+      );
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      setStore(data.storeId); 
+      console.log(data)// Asignamos el storeId obtenido de la respuesta
+    } catch (err) {
+      console.error("Error obteniendo storeId:", err);
+      setError("No se pudo obtener el storeId.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
   return (
     <div className="bg-black text-white p-4 flex flex-row items-center justify-between gap-4">
       {/* Sección izquierda: Botón de toggle + Breadcrumbs (solo en tablet/PC) */}
@@ -52,6 +81,15 @@ console.log(userData?.userImage)
           ))}
         </nav>
       </div>
+      <div>
+  <p>
+    {store === "1"
+      ? "Lindora"
+      : store === "2"
+      ? "Escazú"
+      : "Tienda desconocida"}
+  </p>
+</div>
 
       {/* Sección derecha: Íconos siempre visibles */}
       <div className="flex flex-row gap-4 items-center">
@@ -64,11 +102,18 @@ console.log(userData?.userImage)
         <button className="p-2 rounded-md"><FaMoon className="bg-[#27272A] p-2 rounded-md" size={30} /></button>
         
         {/* Imagen de perfil: Usa la del usuario si existe, de lo contrario usa la predeterminada */}
-        <img
-          src={userData && userData.userImage ? userData.userImage :  "https://static.wixstatic.com/media/2e2561_bb3e95000dc34a2bbd3b767828642f5a~mv2.png"}
-          alt="Perfil"
-          className="w-8 h-8 rounded-full object-cover"
-        />
+        <div 
+  onClick={() => router.push("/profile/user")} 
+  className="cursor-pointer"
+>
+  <img
+    src={userData && userData.userImage 
+      ? userData.userImage 
+      : "https://static.wixstatic.com/media/2e2561_bb3e95000dc34a2bbd3b767828642f5a~mv2.png"}
+    alt="Perfil"
+    className="w-8 h-8 rounded-full object-cover"
+  />
+</div>
       </div>
     </div>
   );

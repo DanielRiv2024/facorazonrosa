@@ -11,17 +11,20 @@ import { format } from "date-fns";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
-
 export default function BillingPage() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [billingData, setBillingData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [idStore, setIdStore] = useState("1");
+  const [idStore, setIdStore] = useState(null);
 
+  const [userData, setUserData] = useState(null);
   const router = useRouter();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+
+
+ 
 
   useEffect(() => {
     if (selectedDate && idStore) {
@@ -29,6 +32,40 @@ export default function BillingPage() {
         fetchBillingData();
     }
   }, [selectedDate, idStore]);
+
+  
+
+
+  useEffect(() => {
+    // Llamamos a la API para obtener el storeId usando el userCode del localStorage
+    const userCode = localStorage.getItem("userCode");  // Recuperamos el userCode del localStorage
+    if (userCode) {
+      fetchStoreId(userCode);
+    }
+  }, []);
+  
+  const fetchStoreId = async (userCode) => {
+    setLoading(true);
+    console.log("si entramos")
+    try {
+      const response = await fetch(
+        `https://bacorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
+      );
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+      const data = await response.json();
+      setIdStore(data.storeId); 
+      console.log(data)// Asignamos el storeId obtenido de la respuesta
+    } catch (err) {
+      console.error("Error obteniendo storeId:", err);
+      setError("No se pudo obtener el storeId.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
 
   const fetchBillingData = async () => {
     setLoading(true);
@@ -68,6 +105,7 @@ export default function BillingPage() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchBillingData();
   }, [selectedDate, idStore]);

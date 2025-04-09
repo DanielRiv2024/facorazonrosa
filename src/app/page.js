@@ -53,7 +53,7 @@ export default function Home() {
       if (response.ok && data.id) { 
         // Guardamos el usuario en una cookie por 1 día
         Cookies.set("user", JSON.stringify(data), { expires: 1 });
-    
+        localStorage.setItem("userCode", data.userCode);
         // Redirigimos al dashboard
         router.push("/dashboard/billing");
       } else {
