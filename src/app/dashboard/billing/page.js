@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+
 export default function BillingPage() {
   const [showNavbar, setShowNavbar] = useState(false);
   const [billingData, setBillingData] = useState([]);
@@ -23,43 +24,28 @@ export default function BillingPage() {
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
   useEffect(() => {
-    console.log(
-      "Cambio detectado en selectedDate o idStore",
-      selectedDate,
-      idStore
-    );
-
     if (selectedDate && idStore) {
-      fetchBillingData();
+
+        fetchBillingData();
     }
   }, [selectedDate, idStore]);
 
   const fetchBillingData = async () => {
     setLoading(true);
-    setError(null); // Reiniciar errores previos
-    setBillingData([]); // Limpiar datos previos
-    //tttt
-
+    setError(null);
+    setBillingData([]);
     try {
-      console.log("Fecha recibida:", selectedDate);
       const formattedDate = format(selectedDate, "yyyy-MM-dd");
-      console.log("Fecha formateada:", formattedDate);
-// testing
       const response = await fetch(
         `https://bacorazonrosa.azurewebsites.net/api/billing/filter?date=${formattedDate}&idStore=${idStore}&code=${API_KEY}`
       );
-
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-
       const data = await response.json();
-      console.log("Datos recibidos:", data);
-
       if (!Array.isArray(data)) {
         throw new Error("La API no devolvió un array");
       }
-
       const formattedData = data.map((item) => ({
         ...item,
         type:
@@ -82,9 +68,6 @@ export default function BillingPage() {
       setLoading(false);
     }
   };
-
-  console.log(billingData);
-  // 🔹 Llamar a la API cuando cambien la fecha o la sucursal
   useEffect(() => {
     fetchBillingData();
   }, [selectedDate, idStore]);

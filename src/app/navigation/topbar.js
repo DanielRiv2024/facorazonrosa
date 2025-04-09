@@ -1,11 +1,16 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { FaMoon } from "react-icons/fa";
 import { IoIosNotifications, IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { SiLibretranslate } from "react-icons/si";
+import { getUserFromCookies } from "@/app/utils/auth";
 
 export default function TopBar({ showNavbar, toggleNavbar }) {
   const router = useRouter();
   const pathname = usePathname();
+  const [userData, setUserData] = useState(null);
 
   const breadcrumbs = pathname
     .split("/")
@@ -15,6 +20,15 @@ export default function TopBar({ showNavbar, toggleNavbar }) {
       path: "/" + arr.slice(0, index + 1).join("/"),
     }));
 
+  useEffect(() => {
+    const user = getUserFromCookies();
+    if (!user) {
+      router.push("/");
+    } else {
+      setUserData(user);
+    }
+  }, []);
+console.log(userData?.userImage)
   return (
     <div className="bg-black text-white p-4 flex flex-row items-center justify-between gap-4">
       {/* Sección izquierda: Botón de toggle + Breadcrumbs (solo en tablet/PC) */}
@@ -48,10 +62,12 @@ export default function TopBar({ showNavbar, toggleNavbar }) {
 
         <button><IoIosNotifications size={25} /></button>
         <button className="p-2 rounded-md"><FaMoon className="bg-[#27272A] p-2 rounded-md" size={30} /></button>
+        
+        {/* Imagen de perfil: Usa la del usuario si existe, de lo contrario usa la predeterminada */}
         <img
-          src="https://static.wixstatic.com/media/2e2561_bb3e95000dc34a2bbd3b767828642f5a~mv2.png"
+          src={userData && userData.userImage ? userData.userImage :  "https://static.wixstatic.com/media/2e2561_bb3e95000dc34a2bbd3b767828642f5a~mv2.png"}
           alt="Perfil"
-          className="w-8 h-8 rounded-full"
+          className="w-8 h-8 rounded-full object-cover"
         />
       </div>
     </div>

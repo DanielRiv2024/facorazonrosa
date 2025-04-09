@@ -1,10 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "@/app/navigation/navbar";
 import TopBar from "../../navigation/topbar";
+import { getUserFromCookies } from "@/app/utils/auth";
+import { useRouter } from "next/navigation";
+
 
 export default function SummaryPage() {
   const [showNavbar, setShowNavbar] = useState(true);
+
+
 
   return (
     <div className="min-h-screen flex flex-col bg-black">

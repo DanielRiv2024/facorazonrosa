@@ -25,7 +25,7 @@ export default function LossReport() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Loss Data Submitted:", formData);
+
     // Aquí puedes manejar el envío del formulario, como enviarlo a un backend
   };
 
