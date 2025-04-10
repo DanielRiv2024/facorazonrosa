@@ -30,48 +30,53 @@ export default function BillingTable({ sales, fetchSales }) {
   };
 
   return (
-    <div className="overflow-x-auto bg-black rounded-lg shadow-md p-4">
-      <table className="min-w-full border border-gray-300">
-        <thead>
-          <tr className="bg-neutral-900">
-           
-            <th className="border px-4 py-2 text-left text-white">Descripción</th>
-            <th className="border px-4 py-2 text-left text-white">Total</th>
-            <th className="border px-4 py-2 text-left text-white">Tipo</th>
-            <th className="border "></th>
-          </tr>
-        </thead>
-        <tbody>
-          {Array.isArray(sales) && sales.length > 0 ? (
-            sales.map((sale) => (
-              <tr key={sale.id} className="border-b text-white hover:bg-gray-800">
-                
-                <td className="border px-4 py-2 text-white">
-                  {sale.description.split("=!$").map((item, index) => (
-                    <div key={index}>{item}</div>
-                  ))}
-                </td>
-                <td className="border px-4 py-2 text-white">CRC {sale.total.toFixed(2)}</td>
-                <td className="border px-4 py-2 text-white">{sale.type}</td>
-                <td className="px-1 py-2 flex flex-col items-center">
-                  <button
-                    className="p-2 bg-neutral-900 rounded-md border border-red-500 hover:bg-black"
-                    onClick={() => handleDelete(sale.id)}
-                  >
-                    <MdDeleteOutline color="red" />
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" className="text-center py-4 text-white text-3xl">
-                <FaRegFrownOpen />
+    <div className="overflow-x-auto rounded-lg shadow-md p-4 bgt-background transition-all duration-300">
+    <table className="min-w-full border rounded-md bgti-background border-black transition-all duration-300">
+      <thead>
+        <tr className="border rounded-lg bgt-background transition-all duration-300">
+          <th className="border px-4 py-2 text-left texttable-foreground">Descripción</th>
+          <th className="border px-4 py-2 text-left texttable-foreground">Total</th>
+          <th className="border px-4 py-2 text-left texttable-foreground">Tipo</th>
+          <th className="border px-4 py-2 text-left texttable-foreground"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {Array.isArray(sales) && sales.length > 0 ? (
+          sales.map((sale) => (
+            <tr
+              key={sale.id}
+              className="border-b bgt-background texttable-foreground transition-all duration-300"
+            >
+              <td className="border px-4 py-2 texttable-foreground">
+                {sale.description.split("=!$").map((item, index) => (
+                  <div key={index}>{item}</div>
+                ))}
+              </td>
+              <td className="border px-4 py-2 texttable-foreground">
+                CRC {sale.total.toFixed(2)}
+              </td>
+              <td className="border px-4 py-2 texttable-foreground">{sale.type}</td>
+              <td className="px-1 py-2 flex flex-col items-center">
+                <button
+                  className="p-2 bg-neutral-900 rounded-md border border-red-500 bgti-background dark:hover:bg-gray-800"
+                  onClick={() => handleDelete(sale.id)}
+                >
+                  <MdDeleteOutline color="red" />
+                </button>
               </td>
             </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="6" className="text-center py-4 text-white text-3xl dark:text-white">
+              <FaRegFrownOpen />
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+  
+
   );
 }

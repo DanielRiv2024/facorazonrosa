@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { CiSaveUp1 } from "react-icons/ci";
 
 export default function UserPage() {
-  const [showNavbar, setShowNavbar] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(false);
   const [userData, setUserData] = useState(null);
   const router = useRouter();
   const API_KEY = process.env.NEXT_PUBLIC_API_KEY;

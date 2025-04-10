@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import TopBar from "@/app/navigation/topbar";
-import Navbar from "@/app/navigation/navbar";
+import TopBar from "../../navigation/topbar";
+import Navbar from "../../navigation/navbar";
 import ProductsTopBar from "./productsTopBar";
 import { MdDelete, MdEditSquare } from "react-icons/md";
 

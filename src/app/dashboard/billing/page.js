@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
-import TopBar from "@/app/navigation/topbar";
-import Navbar from "@/app/navigation/navbar";
+import TopBar from "../../navigation/topbar";
+import Navbar from "../../navigation/navbar";
 import BillingTopBar from "./billingtopbar";
 import BillingTable from "./BillingTable";
 import { format } from "date-fns";
@@ -148,9 +148,9 @@ export default function BillingPage() {
   );
 
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="min-h-screen flex flex-col bg-background transition-all duration-800">
       <div
-        className={`text-white w-64 transition-all duration-300 ${
+        className={`text-white transition-all duration-300 ${
           showNavbar ? "translate-x-0" : "translate-x-[-100%]"
         }`}
       >
@@ -159,14 +159,14 @@ export default function BillingPage() {
 
       <div
         className={`flex flex-col transition-all duration-300 ${
-          showNavbar ? "ml-64" : "ml-0"
+          showNavbar ? "ml-40" : "ml-0"
         }`}
       >
         <TopBar
           showNavbar={showNavbar}
           toggleNavbar={() => setShowNavbar(!showNavbar)}
         />
-        <div className="h-px bg-white opacity-50"></div>
+        <div className="h-px bgb-background opacity-50"></div>
         <div className="flex flex-col gap-4">
           <BillingTopBar
             totalPrice={totalPrice}

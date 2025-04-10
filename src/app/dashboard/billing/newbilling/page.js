@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Navbar from "@/app/navigation/navbar";
-import TopBar from "@/app/navigation/topbar";
+import Navbar from "../../../navigation/navbar";
+import TopBar from "../../../navigation/topbar";
 import { FaUber, FaCcVisa, FaCcMastercard } from "react-icons/fa";
 import { SlScreenSmartphone } from "react-icons/sl";
 import { BsCash } from "react-icons/bs";

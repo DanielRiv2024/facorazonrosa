@@ -1,26 +1,156 @@
+/* globals.css */
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ffffff;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Para Tailwind, usa las variables CSS directamente */
+.bg-background {
+  background-color: var(--background);
+}
+
+
+
+.bgt-background {
+  background-color: #1B1B1D;
+}
+
+.dark .bgt-background {
+  background-color: #fffbfb;
+}
+/*tabla*/
+.bgt-background {
+  background-color: #1B1B1D;
+}
+
+.dark .bgt-background {
+  background-color: #fffbfb;
+}
+
+/*interior de la tabla*/
+.bgti-background {
+  background-color: #000000;
+}
+
+.dark .bgti-background {
+  background-color: #fffbfb;
+}
+
+/*texto tabla*/
+.texttable-foreground {
+  color: rgb(255, 255, 255);
+}
+
+.dark .texttable-foreground {
+  color: rgb(0, 0, 0);
+}
+
+/*botones invertidos*/
+
+.bgb-background {
+  background-color: #ffffff;
+}
+
+.dark .bgb-background {
+  background-color: #000000;
+}
+
+
+.textb-foreground {
+  color: rgb(0, 0, 0);
+}
+
+.dark .textb-foreground {
+  color: rgb(254, 254, 254);
+}
+
+
+/*testing invertidos*/
+
+.t-background {
+  background-color: #5c04ff;
+}
+
+.dark .t-background {
+  background-color: #b71010;
+}
+
+
+.dark .bg-background {
+  background-color: var(--foreground);
+}
+
+.text-foreground {
+  color: var(--foreground);
+}
+
+.dark .text-foreground {
+  color: var(--background);
+}
+
+.hover-invert-text:hover {
+  color: var(--background);
+}
+
+.dark .hover-invert-text:hover {
+  color: var(--foreground);
+}
+
+.sbg-background {
+  background-color: var(--background);
+}
+
+.dark .sbg-background {
+  background-color: var(--foreground);
+}
+
+
+
+
+
+
+/* General para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Modo oscuro */
+.dark .table-background {
+  background-color: #000; /* Fondo negro */
+  color: #fff; /* Letras blancas */
+}
+
+.dark .table-background th,
+.dark .table-background td {
+  border: 1px solid #fff; /* Líneas blancas */
+}
+
+/* Modo claro */
+.light .table-background {
+  background-color: #f5f5dc; /* Color hueso (beige claro) */
+  color: #000; /* Letras negras */
+}
+
+.light .table-background th,
+.light .table-background td {
+  border: 1px solid #000; /* Líneas negras */
 }
