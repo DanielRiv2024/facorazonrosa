@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react";
-import Navbar from "../../../navigation/navbar";
-import TopBar from "../../../app/navigation/topbar";
+import Navbar from "../../../../app/navigation/navbar";
+import TopBar from "../../../../app/navigation/topbar";
 
 export default function LossReport() {
   const [showNavbar, setShowNavbar] = useState(true);

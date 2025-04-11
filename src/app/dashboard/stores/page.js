@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Navbar from "../../app/navigation/navbar";
-import TopBar from "../../navigation/topbar";
+import Navbar from "../../../app/navigation/navbar";
+import TopBar from "../../../navigation/topbar";
 import StoreBoxView from "./storeBoxView";
 
 
