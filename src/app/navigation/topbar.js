@@ -9,7 +9,7 @@ import {
   IoIosArrowBack,
 } from "react-icons/io";
 import { SiLibretranslate } from "react-icons/si";
-import { getUserFromCookies } from "@/app/utils/auth";
+import { getUserFromCookies } from "../../app/utils/auth";
 import ThemeToggle from "../components/ThemeToggle";
 import useTheme from "../hooks/useTheme";
 
