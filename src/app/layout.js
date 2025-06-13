@@ -1,4 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+
 import "./globals.css";
 
 const geistSans = Geist({

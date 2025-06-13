@@ -1,0 +1,44 @@
+import axios from 'axios';
+
+const BASE_URL = 'https://backendproductioncorazonrosa.azurewebsites.net/api';
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
+
+// Crear instancia de Axios
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+
+
+export const ProductsAPI = {
+  getAll: async () => {
+    const res = await api.get(`/GetProducts${API_KEY ? `?code=${API_KEY}` : ''}`);
+    return res.data;
+  },
+
+  deleteById: async (id) => {
+    const url = `/DeleteProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
+    const res = await api.delete(url);
+    return res.data;
+  },
+};
+
+export const BillingAPI = {
+  create: async (data) => {
+    const res = await api.post(`/CreateBilling${API_KEY ? `?code=${API_KEY}` : ''}`, data);
+    return res.data;
+  },
+
+  getAll: async () => {
+    const res = await api.get(`/GetAllBillings${API_KEY ? `?code=${API_KEY}` : ''}`);
+    return res.data;
+  },
+
+  getByDate: async (date) => {
+    const res = await api.get(`/GetBillingByDate?date=${date}${API_KEY ? `&code=${API_KEY}` : ''}`);
+    return res.data;
+  },
+};

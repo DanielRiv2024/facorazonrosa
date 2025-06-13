@@ -20,6 +20,11 @@ export default function Navbar({ show }) {
       icon: <HiCube size={20} />,
       path: "/dashboard/products",
     },
+     {
+      name: "Ventas",
+      icon: <HiCube size={20} />,
+      path: "/dashboard/products",
+    },
     { name: "Inventario", icon: <HiArchive size={20} />, path: "/inventario" },
     { name: "Personal", icon: <HiUser size={20} />, path: "/personal" },
     { name: "Pedidos", icon: <HiShoppingCart size={20} />, path: "/pedidos" },
