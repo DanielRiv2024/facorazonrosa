@@ -3,23 +3,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation"; 
 import Navbar from "../../../../app/navigation/navbar";
 import TopBar from "../../../../app/navigation/topbar";
-
-
+import { ProductsAPI } from "../../../../services/apiService";
 
 export default function NewProduct() {
   const [showNavbar, setShowNavbar] = useState(false);
   const router = useRouter();
-
-  // Estados del formulario
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [categories, setCategories] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [status, setStatus] = useState("disponible");
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-  // Manejo de formulario
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,26 +28,12 @@ export default function NewProduct() {
       image,
       status: status === "disponible",
     };
-
+     
     try {
-      const response = await fetch(`${API_URL}?code=${API_KEY}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(productData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al agregar el producto");
-      }
-
-      alert("✅ Producto agregado con éxito!");
+     const result = await ProductsAPI.create(productData);
       router.push("/dashboard/products");
-
-    } catch (error) {
-      console.error("Error:", error);
-      alert("❌ Hubo un problema al agregar el producto");
+    } catch (err) {
+     alert("❌ Hubo un problema al agregar el producto");
     }
   };
 
@@ -60,6 +41,7 @@ export default function NewProduct() {
     <div className="min-h-screen flex flex-col bg-zinc-100">
       <div className={`text-black text-sm w-64 transition-all duration-300 ${showNavbar ? "translate-x-0" : "translate-x-[-100%]"}`}>
         <Navbar showNavbar={showNavbar} />
+        
       </div>
       <div className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"}`}>
         <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />

@@ -30,11 +30,11 @@ export default function ProductsPage() {
   }, []);
 
   const handleDelete = async (id) => {
+    console.log(id)
     if (!window.confirm("¿Seguro que quieres eliminar este producto?")) return;
 
     try {
       await ProductsAPI.deleteById(id);
-      alert("✅ Producto eliminado con éxito!");
       window.location.reload();
     } catch (error) {
       alert("❌ Hubo un problema al eliminar el producto");

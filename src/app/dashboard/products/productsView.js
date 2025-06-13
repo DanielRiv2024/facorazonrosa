@@ -30,7 +30,7 @@ export default function ProductsView({ p, onDelete }) {
             <HiPencil size={17} color="purple" />
           </button>
           <button
-            onClick={() => onDelete(p._id)}
+            onClick={() => onDelete(p.id)}
             className="p-1 rounded-md hover:bg-gray-100 transition-all">
             <HiTrash  size={17} color="red" />
           </button>
@@ -42,3 +42,4 @@ export default function ProductsView({ p, onDelete }) {
     </div>
   );
 }
+

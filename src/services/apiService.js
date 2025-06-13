@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+
+//const BASE_URL = process.env.NEXT_PUBLIC_API_URL
 const BASE_URL = 'https://backendproductioncorazonrosa.azurewebsites.net/api';
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -22,6 +24,12 @@ export const ProductsAPI = {
   deleteById: async (id) => {
     const url = `/DeleteProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
     const res = await api.delete(url);
+    return res.data;
+  },
+   create: async (product) => {
+    console.log(product)
+    const url = `/CreateProduct${API_KEY ? `?code=${API_KEY}` : ''}`;
+    const res = await api.post(url, product);
     return res.data;
   },
 };
