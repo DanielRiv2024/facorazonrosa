@@ -104,34 +104,31 @@ export default function Home() {
 
 
   return (
-    <div className="flex flex-col items-center justify-items-center min-h-screen p-8 bg-black">
+<div
+  className="flex items-center justify-center min-h-screen bg-cover bg-center"
+  style={{ backgroundImage: "url('/images/bglogin.jpeg')" }}
+>
       {/* Formulario de Login */}
-      <div className="bg-neutral-900 p-8 rounded-lg shadow-lg max-w-md w-full flex flex-col items-center justify-center">
-        <h2 className="text-center text-2xl font-bold mb-6">Corazón De La Rosa</h2>
-        <h2 className="text-center text-2xl font-bold mb-6">Admin Portal</h2>
-        <Image src="/images/bg-corazonrosa.png" alt="Logo" width={150} height={150} />
+      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full flex flex-col items-center justify-center">
+        <Image src="/images/logogold.jpeg" alt="Logo" width={350} height={250} className="" />
         {error && <div className="text-red-600 mb-4">{error}</div>}
 
         <form onSubmit={handleLogin} className="w-full">
-          <div className="mb-4">
-            <label className="block text-sm font-semibold text-white">Código de Empleado</label>
+          <div className="my-4 gap-2 flex flex-col">
+          
             <input
               type="text"
               value={codigoEmpleado}
               onChange={(e) => setCodigoEmpleado(e.target.value)}
-              className="w-full p-2 bg-white text-black  border border-black rounded-md"
+              className="w-full p-2 bg-white text-slate-400 text-sm border border-2 border-amber-400 rounded-md"
               placeholder="Código de Empleado"
               required
             />
-          </div>
-
-          <div className="mb-4">
-            <label className="block text-sm font-semibold text-white">Contraseña</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 bg-white text-black  border border-black rounded-md"
+              className="w-full p-2 bg-white text-slate-400 text-sm  border border-2 border-amber-400 rounded-md"
               placeholder="Contraseña"
               required
             />
@@ -140,7 +137,7 @@ export default function Home() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full p-2 font-bold bg-green-600 hover:text-green-600 text-white rounded-md hover:bg-black transition-colors"
+            className="w-full p-2 font-bold bg-amber-400  text-white rounded-md hover:bg-amber-200 transition-colors"
           >
             {loading ? "Cargando..." : "Iniciar Sesión"}
           </button>
@@ -155,32 +152,6 @@ export default function Home() {
             ¿Olvidaste tu contraseña?
           </button>
         </div>
-
-        {/* Modal o input para restablecer contraseña */}
-        {emailRestablecer !== "" && (
-          <div className="mt-4 text-center">
-            <form onSubmit={handleRestablecer}>
-              <div className="mb-4">
-                <label className="block text-sm font-semibold text-white">Correo Electrónico</label>
-                <input
-                  type="email"
-                  value={emailRestablecer}
-                  onChange={(e) => setEmailRestablecer(e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  placeholder="Ingresa tu correo"
-                  required
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full p-2 bg-blue-600 text-white rounded-md hover:bg-blue-500 transition-colors"
-              >
-                Enviar Enlace de Restablecimiento
-              </button>
-            </form>
-          </div>
-        )}
       </div>
     </div>
   );
