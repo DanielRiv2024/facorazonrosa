@@ -25,7 +25,7 @@ export default function Home() {
     try {
     
       const response = await fetch(
-        `https://backendproductioncorazonrosa.azurewebsites.net/api/ValidateUser?code=JzpTfdgg45jhxwQfLbNhgYxWikTNgWkke2g7eQCQcMqdAzFudOSafQ==`,
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/ValidateUser?code=${API_KEY}`,
         {
           method: "POST",
           headers: {
