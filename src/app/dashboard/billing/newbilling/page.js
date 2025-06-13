@@ -46,7 +46,7 @@ console.log(store)
   const fetchStoreId = async (userCode) => {
     try {
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -66,7 +66,7 @@ console.log(store)
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(`https://bacorazonrosa.azurewebsites.net/api/GetProducts?code=${API_KEY}`);
+        const response = await fetch(`https://backendproductioncorazonrosa.azurewebsites.net/api/GetProducts?code=${API_KEY}`);
         if (!response.ok) throw new Error("Error al obtener productos");
         const data = await response.json();
         setProducts(data);
@@ -132,7 +132,7 @@ console.log(store)
     };
     try {
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/CreateBilling?code=${API_KEY}`,
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/CreateBilling?code=${API_KEY}`,
         {
           method: "POST",
           headers: {

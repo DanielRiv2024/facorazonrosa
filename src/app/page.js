@@ -25,7 +25,7 @@ export default function Home() {
     try {
     
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/ValidateUser?code=${API_KEY}`,
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/ValidateUser?code=JzpTfdgg45jhxwQfLbNhgYxWikTNgWkke2g7eQCQcMqdAzFudOSafQ==`,
         {
           method: "POST",
           headers: {
@@ -36,7 +36,9 @@ export default function Home() {
             password: password,
           }),
         }
+      
       );
+
     
     
       // Verificamos si la respuesta es un JSON válido antes de continuar

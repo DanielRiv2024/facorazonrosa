@@ -30,6 +30,8 @@ export default function UserPage() {
     router.push("/");
   };
 
+
+
   const handleStoreIdChange = (event) => {
     setUserData({
       ...userData,
@@ -39,7 +41,7 @@ export default function UserPage() {
 
   const handleUpdateStoreId = async () => {
     const response = await fetch(
-      `https://bacorazonrosa.azurewebsites.net/api/users/${userData.userCode}/storeId?code=${API_KEY}`,
+      `https://backendproductioncorazonrosa.azurewebsites.net/api/users/${userData.userCode}/storeId?code=${API_KEY}`,
       {
         method: "PUT",
         headers: {
@@ -72,7 +74,7 @@ export default function UserPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-black">
+    <div className="min-h-screen flex flex-col bg-background">
       <div
         className={`text-white w-64 transition-all duration-300 ${
           showNavbar ? "translate-x-0" : "-translate-x-full"

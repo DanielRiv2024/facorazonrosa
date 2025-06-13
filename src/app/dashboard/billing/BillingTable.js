@@ -11,7 +11,7 @@ export default function BillingTable({ sales, fetchSales }) {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`https://bacorazonrosa.azurewebsites.net/api/billing/delete/${id}?code=${API_KEY}`, {
+      const response = await fetch(`https://backendproductioncorazonrosa.azurewebsites.net/api/billing/delete/${id}?code=${API_KEY}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

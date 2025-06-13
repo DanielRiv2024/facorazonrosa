@@ -49,7 +49,7 @@ export default function BillingPage() {
     console.log("si entramos")
     try {
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
@@ -74,7 +74,7 @@ export default function BillingPage() {
     try {
       const formattedDate = format(selectedDate, "yyyy-MM-dd");
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/billing/filter?date=${formattedDate}&idStore=${idStore}&code=${API_KEY}`
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/billing/filter?date=${formattedDate}&idStore=${idStore}&code=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);

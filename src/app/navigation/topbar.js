@@ -50,7 +50,7 @@ export default function TopBar({ showNavbar, toggleNavbar }) {
   const fetchStoreId = async (userCode) => {
     try {
       const response = await fetch(
-        `https://bacorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
+        `https://backendproductioncorazonrosa.azurewebsites.net/api/users/${userCode}/storeId?code=${API_KEY}`
       );
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
