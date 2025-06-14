@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { MdEdit, MdToggleOn, MdToggleOff } from 'react-icons/md';
 
-export default function ProductInformation() {
+export default function ProductInformation({p}) {
   // 🔹 Datos falsos del producto
   const initialProduct = {
     name: 'Gorra Rosa Edición Limitada',
@@ -12,7 +12,7 @@ export default function ProductInformation() {
     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sehHJAfCx3jSSpAiqrc_eho8ugMC8QN9mQ&s',
   };
 
-  const [product, setProduct] = useState(initialProduct);
+  const [product, setProduct] = useState(p);
   const [originalProduct, setOriginalProduct] = useState(initialProduct);
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);

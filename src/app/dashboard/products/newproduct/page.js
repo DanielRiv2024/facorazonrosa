@@ -43,7 +43,7 @@ export default function NewProduct() {
         <Navbar showNavbar={showNavbar} />
         
       </div>
-      <div className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"}`}>
+      <div className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-38" : "ml-0"}`}>
         <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />
         <div className="h-px bg-black opacity-50"></div>
         <div className="rounded-2xl shadow-lg bg-white p-2 m-2">

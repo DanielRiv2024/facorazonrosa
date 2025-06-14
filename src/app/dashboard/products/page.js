@@ -50,12 +50,12 @@ export default function ProductsPage() {
   return (
     <div className="min-h-screen flex flex-col bg-zinc-100">
       <div
-        className={`text-white w-64 transition-all duration-300 ${showNavbar ? "translate-x-0" : "translate-x-[-100%]"
+        className={`text-white  transition-all duration-300 ${showNavbar ? "translate-x-0" : "translate-x-[-100%]"
           }`}>
         <Navbar showNavbar={showNavbar} />
       </div>
       <div
-        className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-64" : "ml-0"
+        className={`flex flex-col transition-all duration-300 ${showNavbar ? "ml-38" : "ml-0"
           }`}>
         <TopBar
           showNavbar={showNavbar}
@@ -76,7 +76,7 @@ export default function ProductsPage() {
         ) : error ? (
           <p className="text-red-500 p-4">Error: {error}</p>
         ) : (
-          <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {products.map((product) => (
               <ProductsView key={product._id} p={product}/>
             ))}

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  HiHome,
   HiCube,
   HiArchive,
   HiUser,
@@ -23,7 +22,7 @@ export default function Navbar({ show }) {
      {
       name: "Ventas",
       icon: <HiCube size={20} />,
-      path: "/dashboard/products",
+      path: "/dashboard/sales",
     },
     { name: "Inventario", icon: <HiArchive size={20} />, path: "/inventario" },
     { name: "Personal", icon: <HiUser size={20} />, path: "/personal" },
@@ -47,15 +46,15 @@ export default function Navbar({ show }) {
   ];
 
   return (
-    <div className="bg-background text-foreground h-screen fixed top-0 left-0 p-4 transition-all duration-800">
+    <div className="bg-white text-amber-400 text-sm h-screen fixed top-0 left-0 p-4 transition-all duration-800">
       {navItems.map((item) => (
-        <Link key={item.name} href={item.path} className="block">
+        <Link key={item.name} href={item.path} className=" block">
           <div
             className={`p-2 flex items-center mb-2 gap-2 rounded-md cursor-pointer transition-all duration-200
   ${
     pathname.startsWith(item.path)
-      ? "bg-neutral-900 text-white"
-      : "hover:bg-[#27272A] hover:text-white"
+      ? "bg-amber-300 text-white"
+      : "hover:bg-amber-100 hover:text-black"
   }`}>
             {item.icon} {item.name}
           </div>

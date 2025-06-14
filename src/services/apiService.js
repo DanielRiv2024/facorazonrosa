@@ -21,15 +21,28 @@ export const ProductsAPI = {
     return res.data;
   },
 
-  deleteById: async (id) => {
-    const url = `/DeleteProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
-    const res = await api.delete(url);
+    getById: async (id) => {
+    const url = `/GetProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
+    const res = await api.get(url);
     return res.data;
   },
+
    create: async (product) => {
     console.log(product)
     const url = `/CreateProduct${API_KEY ? `?code=${API_KEY}` : ''}`;
     const res = await api.post(url, product);
+    return res.data;
+  },
+
+    updateById: async (id, updatedProduct) => {
+    const url = `/UpdateProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
+    const res = await api.put(url, updatedProduct);
+    return res.data;
+  },
+
+  deleteById: async (id) => {
+    const url = `/DeleteProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
+    const res = await api.delete(url);
     return res.data;
   },
 };
