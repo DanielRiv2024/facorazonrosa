@@ -1,14 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { HiPencil,HiTrash  } from "react-icons/hi2";
 
-export default function ProductsView({ p, onDelete }) {
+export default function ProductsView({p}) {
   const router = useRouter();
 
   if (!p) return null;
 
   return (
-    <div className="border bg-white border-white text-amber-400 p-4 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer flex flex-col items-center justify-center">
+    <div className="border bg-white border-white text-amber-400 p-4 rounded-lg shadow-md hover:shadow-lg transition-all cursor-pointer flex flex-col items-center justify-center"
+    onClick={() => router.push(`/dashboard/products/product?id=${p.id}`)}>
       <img
         src={p.image || "/placeholder.jpg"}
         alt={p.name || "Producto"}
@@ -23,22 +23,11 @@ export default function ProductsView({ p, onDelete }) {
           }`} >
           {p.status ? "Disponible" : "Agotado"}
         </span>
-        <div className="flex gap-2">
-          <button
-            onClick={() => router.push(`/edit/${p._id}`)}
-            className="p-1 rounded-md hover:bg-gray-100 transition-all">
-            <HiPencil size={17} color="purple" />
-          </button>
-          <button
-            onClick={() => onDelete(p.id)}
-            className="p-1 rounded-md hover:bg-gray-100 transition-all">
-            <HiTrash  size={17} color="red" />
-          </button>
-        </div>
-      </div>
-      <p className="text-xs font-bold ">
+         <p className="text-xs font-bold ">
         {p.price === 1 ? "Precio flexible" : `CRC ${p.price}`}
       </p>
+      </div>
+     
     </div>
   );
 }

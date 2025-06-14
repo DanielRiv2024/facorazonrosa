@@ -5,6 +5,8 @@ import Navbar from "../../../app/navigation/navbar";
 import ProductsTopBar from "./productsTopBar";
 import ProductsView from "./productsView";
 import { ProductsAPI } from "../../../services/apiService"
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function ProductsPage() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -41,6 +43,10 @@ export default function ProductsPage() {
     }
   };
 
+    const handleEdit = async (p) => {
+  console.log(p)
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-zinc-100">
       <div
@@ -60,13 +66,19 @@ export default function ProductsPage() {
           activeProductsNum={activeProductsNum}
           inactiveProductsNum={inactiveProductsNum}/>
         {loading ? (
-          <p className="text-white p-4">Cargando productos...</p>
+           <div className="flex flex-col gap-4 mr-4 ml-4 mt-4">
+                        <SkeletonTheme baseColor="#FFFFFF" highlightColor="#FFC733" className>
+                          <p>
+                            <Skeleton count={12} height={40}/>
+                          </p>
+                        </SkeletonTheme>
+                      </div>
         ) : error ? (
           <p className="text-red-500 p-4">Error: {error}</p>
         ) : (
           <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
             {products.map((product) => (
-              <ProductsView key={product._id} p={product} onDelete={handleDelete} />
+              <ProductsView key={product._id} p={product}/>
             ))}
           </div>
         )}

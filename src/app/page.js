@@ -109,7 +109,7 @@ export default function Home() {
   style={{ backgroundImage: "url('/images/bglogin.jpeg')" }}
 >
       {/* Formulario de Login */}
-      <div className="bg-[rgba(255,255,255,0.80)] p-8 rounded-lg shadow-lg max-w-md w-full flex flex-col items-center justify-center">
+      <div className="bg-[rgba(255,255,255,0.90)] p-8 rounded-lg shadow-lg max-w-md w-full flex flex-col items-center justify-center">
         <Image src="/images/logogold.png" alt="Logo" width={350} height={250} className="" />
         {error && <div className="text-red-600 mb-4">{error}</div>}
 
