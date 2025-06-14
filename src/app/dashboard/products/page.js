@@ -31,21 +31,6 @@ export default function ProductsPage() {
     fetchProducts();
   }, []);
 
-  const handleDelete = async (id) => {
-    console.log(id)
-    if (!window.confirm("¿Seguro que quieres eliminar este producto?")) return;
-
-    try {
-      await ProductsAPI.deleteById(id);
-      window.location.reload();
-    } catch (error) {
-      alert("❌ Hubo un problema al eliminar el producto");
-    }
-  };
-
-    const handleEdit = async (p) => {
-  console.log(p)
-  };
 
   return (
     <div className="min-h-screen flex flex-col bg-zinc-100">
@@ -78,7 +63,7 @@ export default function ProductsPage() {
         ) : (
           <div className="p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {products.map((product) => (
-              <ProductsView key={product._id} p={product}/>
+              <ProductsView key={product.id} p={product}/>
             ))}
           </div>
         )}

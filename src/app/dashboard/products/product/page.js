@@ -14,7 +14,7 @@ export default function ProductsPage() {
   const [product, setProduct] = useState(null);
   const searchParams = useSearchParams();
   const productId = searchParams.get("id");
-
+console.log(productId)
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -46,14 +46,21 @@ export default function ProductsPage() {
         <TopBar showNavbar={showNavbar} toggleNavbar={() => setShowNavbar(!showNavbar)} />
 
         <div className="h-px bg-black opacity-50"></div>
-        <div className="p-4">
-       <ProductTopBar/>
-      <ProductInformation p={product} />
-       <div className="flex flex-row">
- <PurchaseVsSalesChart/>
- <PriceComparisonPieChart/>
-       </div>
-        </div>
+       <div className="p-4">
+  <ProductTopBar />
+
+  {product ? (
+    <ProductInformation p={product} />
+  ) : (
+    <div className="text-center text-gray-500 my-4">Cargando producto...</div>
+  )}
+
+  <div className="flex flex-row">
+    <PurchaseVsSalesChart />
+    <PriceComparisonPieChart />
+  </div>
+</div>
+
       </div>
     </div>
   );

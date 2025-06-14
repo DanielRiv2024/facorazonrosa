@@ -17,7 +17,7 @@ const api = axios.create({
 
 export const ProductsAPI = {
   getAll: async () => {
-    const res = await api.get(`/GetProducts${API_KEY ? `?code=${API_KEY}` : ''}`);
+    const res = await api.get(`/GetProducts?code=${API_KEY}`);
     return res.data;
   },
 
