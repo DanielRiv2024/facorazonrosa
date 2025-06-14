@@ -33,13 +33,13 @@ export default function ProductInformation() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white text-black p-6 rounded-xl shadow-lg space-y-4 mt-10">
+    <div className="flex items-center justify-between p-4 rounded-2xl shadow-lg bg-white m-2">
       {/* Imagen */}
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center w-md mx-1">
         <img
           src={product.image}
           alt={product.name}
-          className="w-40 h-40 object-cover rounded-md  p-2 bg-white text-slate-400 text-sm  border border-2 border-amber-400 rounded-md"
+          className="w-64 h-64 object-cover rounded-md"
         />
         <button
           onClick={() => setIsEditingImage(true)}
@@ -58,8 +58,8 @@ export default function ProductInformation() {
           />
         )}
       </div>
-
-      {/* Nombre */}
+      <div className='w-full'>
+{/* Nombre */}
       <div>
         <label className="block text-sm text-slate-400">Nombre</label>
         <input
@@ -96,26 +96,28 @@ export default function ProductInformation() {
         <label className="text-sm text-slate-400">Estado:</label>
         <button onClick={() => handleChange('status', !product.status)}>
           {product.status ? (
-            <MdToggleOn size={30} color="green" />
+            <MdToggleOn size={50} color="green" />
           ) : (
-            <MdToggleOff size={30} color="gray" />
+            <MdToggleOff size={50} color="gray" />
           )}
         </button>
-        <span className="text-sm text-amber-400">{product.status ? 'Disponible' : 'Agotado'}</span>
       </div>
 
       {/* Botón de actualizar */}
       <button
         disabled={!hasChanges}
         onClick={handleUpdate}
-        className={`w-full mt-4 p-2 rounded-md text-slate-400 text-white transition-all ${
+        className={`w-full mt-4 p-2 rounded-md text-white transition-all ${
           hasChanges
-            ? 'bg-purple-600 hover:bg-purple-700'
+            ? 'bg-amber-400 hover:bg-amber-200'
             : 'bg-gray-400 cursor-not-allowed'
         }`}
       >
-        Actualizar producto
+        Actualizar
       </button>
+      </div>
+
+      
     </div>
   );
 }

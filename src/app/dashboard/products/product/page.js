@@ -4,6 +4,8 @@ import Navbar from "../../../../app/navigation/navbar";
 import TopBar from "../../../../app/navigation/topbar";
 import ProductTopBar from "./productTopBar";
 import ProductInformation from "./productInformation"
+import PurchaseVsSalesChart from "./PurchaseVsSalesChart"
+import PriceComparisonPieChart from "./PriceComparisonPieChart"
 
 export default function ProductsPage() {
   const [showNavbar, setShowNavbar] = useState(false);
@@ -24,6 +26,12 @@ export default function ProductsPage() {
         <div className="p-4">
        <ProductTopBar/>
        <ProductInformation/>
+       <div className="flex flex-row">
+ <PurchaseVsSalesChart/>
+ <PriceComparisonPieChart/>
+
+       </div>
+      
         </div>
       </div>
     </div>
