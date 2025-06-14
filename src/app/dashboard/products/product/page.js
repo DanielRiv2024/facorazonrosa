@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../../../../app/navigation/navbar";
 import TopBar from "../../../../app/navigation/topbar";
 import ProductTopBar from "./productTopBar";
@@ -21,6 +21,7 @@ export default function ProductsPage() {
       if (!productId) return;
       try {
         const fetchedProduct = await ProductsAPI.getById(productId);
+        console.log(fetchProduct)
         setProduct(fetchedProduct);
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -30,7 +31,7 @@ export default function ProductsPage() {
     fetchProduct();
   }, [productId]);
 
-
+/* <ProductInformation p={product} />*/
   return (
     <div className="min-h-screen flex flex-col bg-zinc-100">
       <div
@@ -47,7 +48,7 @@ export default function ProductsPage() {
         <div className="h-px bg-black opacity-50"></div>
         <div className="p-4">
        <ProductTopBar/>
-       <ProductInformation p={product} />
+      <ProductInformation p={product} />
        <div className="flex flex-row">
  <PurchaseVsSalesChart/>
  <PriceComparisonPieChart/>

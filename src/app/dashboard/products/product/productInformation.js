@@ -16,7 +16,7 @@ export default function ProductInformation({p}) {
   const [originalProduct, setOriginalProduct] = useState(initialProduct);
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-
+console.log(product)
   useEffect(() => {
     const changed = JSON.stringify(product) !== JSON.stringify(originalProduct);
     setHasChanges(changed);

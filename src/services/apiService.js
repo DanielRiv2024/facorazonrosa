@@ -22,7 +22,7 @@ export const ProductsAPI = {
   },
 
     getById: async (id) => {
-    const url = `/GetProduct/${id}${API_KEY ? `?code=${API_KEY}` : ''}`;
+    const url = `/GetProduct/${id}?code=${API_KEY}`;
     const res = await api.get(url);
     return res.data;
   },
