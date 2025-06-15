@@ -22,7 +22,7 @@ const data = [
 
 export default function PurchaseVsSalesChart() {
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 w-4xl h-[350px] mb-10">
+    <div className="rounded-xl bg-white shadow-md p-4 w-4xl h-[350px] mb-10">
       <h2 className="text-xl font-semibold mb-4 text-gray-700">Resumen semanal</h2>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data}>

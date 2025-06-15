@@ -13,7 +13,7 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
 
 export default function PriceComparisonPieChart() {
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 w-full max-w-md mx-auto">
+    <div className="bg-white rounded-xl shadow-md h-[350px] p-4 w-full max-w-md mx-auto">
       <h2 className="text-xl font-semibold mb-4 text-gray-700 text-center">
         Comparación de precios por proveedor
       </h2>
