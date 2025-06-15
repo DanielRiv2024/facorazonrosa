@@ -1,22 +1,16 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { MdEdit, MdToggleOn, MdToggleOff } from 'react-icons/md';
+import { ProductsAPI } from '../../../../services/apiService';
 
 export default function ProductInformation({p}) {
   // 🔹 Datos falsos del producto
-  const initialProduct = {
-    name: 'Gorra Rosa Edición Limitada',
-    description: 'Gorra ajustable de algodón color rosa pastel con logo bordado.',
-    price: 11900,
-    status: true,
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sehHJAfCx3jSSpAiqrc_eho8ugMC8QN9mQ&s',
-  };
+
 
   const [product, setProduct] = useState(p);
-  const [originalProduct, setOriginalProduct] = useState(initialProduct);
+  const [originalProduct, setOriginalProduct] = useState(p);
   const [isEditingImage, setIsEditingImage] = useState(false);
   const [hasChanges, setHasChanges] = useState(false);
-console.log(product)
   useEffect(() => {
     const changed = JSON.stringify(product) !== JSON.stringify(originalProduct);
     setHasChanges(changed);
@@ -26,11 +20,19 @@ console.log(product)
     setProduct(prev => ({ ...prev, [key]: value }));
   };
 
-  const handleUpdate = () => {
-    alert('✅ Producto actualizado (simulado):\n' + JSON.stringify(product, null, 2));
+
+
+  const handleUpdate = async () => {
+  try {
+    await ProductsAPI.updateById(product.id, product);
+    alert("✅ Producto actualizado exitosamente.");
     setOriginalProduct(product);
     setHasChanges(false);
-  };
+  } catch (error) {
+    console.error("❌ Error actualizando el producto:", error);
+    alert("❌ Error al actualizar el producto. Intenta de nuevo.");
+  }
+};
 
   return (
     <div className="flex items-center justify-between p-4 rounded-2xl shadow-lg bg-white m-2">
